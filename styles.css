@@ -59,21 +59,27 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center; /* Centra las tarjetas horizontalmente */
-    align-items: flex-start; /* Alinear al inicio verticalmente para que las alturas desiguales no afecten la alineación */
+    align-items: center; /* Esto centra los elementos hijos verticalmente si es necesario */
     gap: 20px; /* Esto añade un espacio entre las cajas, ajusta según necesites */
 
 }
 
-/* Ajustes para las tarjetas de proyecto para hacerlas cuadradas y de tamaño fijo */
+/* Ajustes para las tarjetas de proyecto para hacerlas cuadradas */
 .card.project-card {
-    /* Asegúrate de que la tarjeta tenga un ancho fijo para que todas las tarjetas sean del mismo tamaño */
-    width: 250px; /* o cualquier otro tamaño que prefieras */
-    /* Altura fija para la imagen para mantener la tarjeta cuadrada */
-    height: 250px; /* Debe ser el mismo valor que el ancho si quieres una tarjeta cuadrada */
-    margin-bottom: 20px; /* Espacio debajo de cada caja */
+    width: 250px; /* Ajusta este valor según el tamaño deseado para tus cajas */
+    margin-bottom: 20px; /* Espacio debajo de cada caja, ajusta según necesites */
 }
 
-.card.project-card img {
-    object-fit: cover; /* Asegúrate de que la imagen cubra todo el espacio disponible sin distorsionarse */
-    height: 100%; /* Altura igual al contenedor para mantener la proporción */
+/* Forzar a las tarjetas a tener una proporción cuadrada */
+.card-body::before {
+    content: "";
+    display: block;
+    padding-top: 100%; /* Esto hace que el contenedor sea cuadrado */
+}
+
+.card-body {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
 }
