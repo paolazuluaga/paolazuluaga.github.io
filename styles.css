@@ -53,3 +53,35 @@
 .project-card:hover .hover-overlay {
     opacity: 1;
 }
+
+/* Ajustar el contenedor de las tarjetas */
+.projects-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Centra las tarjetas horizontalmente */
+}
+
+/* Ajustes específicos para las tarjetas de proyectos para hacerlas cuadradas */
+.card.project-card {
+    width: calc(50% - 20px); /* Ajusta este valor según lo que necesites, restando el espaciado deseado */
+    margin: 10px; /* Espaciado alrededor de las tarjetas */
+}
+
+.card.project-card .card-img-top {
+    width: 100%; /* Asegura que la imagen cubra el ancho */
+    height: auto; /* Mantiene la proporción de la imagen */
+}
+
+/* Forzar a las tarjetas a tener una proporción cuadrada */
+.card-body::before {
+    content: "";
+    float: left;
+    padding-top: 100%; /* Esto hace que el contenedor sea cuadrado */
+}
+
+/* Asegúrate de limpiar el float para los elementos siguientes */
+.card-body::after {
+    content: "";
+    display: table;
+    clear: both;
+}
