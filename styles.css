@@ -1,0 +1,23 @@
+/* styles.css */
+
+/* Tu CSS personalizado aquí */
+.header {
+    margin-bottom: 2rem;
+}
+
+.nav-link {
+    margin: 0 0.5rem;
+}
+
+.footer {
+    margin-top: 2rem;
+}
+
+/* Ajustes específicos para personalizar los estilos de Bootstrap */
+.card {
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}

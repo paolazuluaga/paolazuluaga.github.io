@@ -1,7 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paola Zuluaga</title>
+    <!-- Incluye Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Incluye tu archivo CSS personalizado después de bootstrap para sobrescribir estilos si es necesario -->
+    <link rel="stylesheet" href="styles.css">
+</head>
 <body>
-<h1>PAOLA ZULUAGA</h1>
-<p>Nueva página</p>
+
+<header class="bg-light text-center py-5">
+    <img src="ruta-a-tu-imagen.jpg" alt="Tu Nombre" class="rounded-circle mb-3">
+    <h1>Hi, I'm Paola Zuluaga!</h1>
+    <p class="lead">I'm a Geospatial Scientist passionate about the territorial analysis, data analysis, geographic visualization.</p>
+    <nav class="nav justify-content-center">
+        <a class="nav-link" href="#about">About</a>
+        <a class="nav-link" href="#contact">Contact</a>
+        <a class="nav-link" href="ruta-a-tu-cv.pdf" target="_blank">Resume</a>
+        <a class="nav-link" href="https://www.linkedin.com/in/zuluagapaola/" target="_blank">LinkedIn</a>
+    </nav>
+</header>
+
+<main class="container mt-5">
+    <section id="projects">
+        <h2 class="text-center mb-5">My Projects</h2>
+        <div class="row">
+            <!-- Repite este bloque para cada proyecto -->
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="ruta-a-imagen-del-proyecto.jpg" alt="Descripción del Proyecto" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">Nombre del Proyecto</h5>
+                        <p class="card-text">Descripción breve del proyecto...</p>
+                        <!-- Agrega más detalles o un enlace al proyecto si es necesario -->
+                    </div>
+                </div>
+            </div>
+            <!-- Fin de la repetición del bloque de proyecto -->
+        </div>
+    </section>
+    <!-- Otras secciones como Sobre mí o Contacto -->
+    <!-- ... -->
+</main>
+
+<footer class="bg-dark text-white text-center py-3 mt-5">
+    <p>© 2024 - Paola Mejia-Zuluaga. Todos los derechos reservados.</p>
+</footer>
+
+<!-- Incluye Bootstrap JS y dependencias -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>
