@@ -64,7 +64,7 @@
 
 /* Ajustes específicos para las tarjetas de proyectos para hacerlas cuadradas */
 .card.project-card {
-    width: calc(50% - 10px); /* Ajusta este valor según lo que necesites, restando el espaciado deseado */
+    width: calc(50% - 50px); /* Ajusta este valor según lo que necesites, restando el espaciado deseado */
     margin: 5px; /* Espaciado alrededor de las tarjetas */
 }
 
