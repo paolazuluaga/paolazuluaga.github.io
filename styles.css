@@ -65,7 +65,7 @@
 /* Ajustes para las tarjetas de proyecto */
 .project-card {
     width: calc(50% - 20px); /* Ajusta para 2 tarjetas por fila con espacio */
-    margin: 10px;
+    margin: 5px;
     position: relative;
 }
 
