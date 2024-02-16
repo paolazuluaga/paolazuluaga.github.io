@@ -54,26 +54,29 @@
     opacity: 1;
 }
 
-/* Ajustar el contenedor de las tarjetas */
+/* Contenedor de proyectos */
 .projects-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center; /* Centra las tarjetas horizontalmente */
-    align-items: flex-start; /* Alinear al inicio verticalmente para que las alturas desiguales no afecten la alineación */
-    gap: 20px; /* Esto añade un espacio entre las cajas, ajusta según necesites */
-
 }
 
-/* Ajustes para las tarjetas de proyecto para hacerlas cuadradas y de tamaño fijo */
-.card.project-card {
-    /* Asegúrate de que la tarjeta tenga un ancho fijo para que todas las tarjetas sean del mismo tamaño */
-    width: 250px; /* o cualquier otro tamaño que prefieras */
-    /* Altura fija para la imagen para mantener la tarjeta cuadrada */
-    height: 250px; /* Debe ser el mismo valor que el ancho si quieres una tarjeta cuadrada */
-    margin-bottom: 20px; /* Espacio debajo de cada caja */
+/* Ajustes para las tarjetas de proyecto */
+.project-card {
+    width: calc(50% - 20px); /* Ajusta para 2 tarjetas por fila con espacio */
+    margin: 10px;
+    position: relative;
 }
 
-.card.project-card img {
-    object-fit: cover; /* Asegúrate de que la imagen cubra todo el espacio disponible sin distorsionarse */
-    height: 100%; /* Altura igual al contenedor para mantener la proporción */
+.project-card::after {
+    content: '';
+    display: block;
+    padding-bottom: 100%; /* Esto crea la proporción cuadrada */
 }
+
+.card-img-top {
+    height: 100%; /* Asegura que la imagen cubra la altura ajustada */
+    object-fit: cover; /* Cubre el área sin perder la proporción */
+}
+
+/* Ajustes de hover-overlay y text-overlay como los tienes */
