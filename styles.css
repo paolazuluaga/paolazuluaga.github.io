@@ -91,3 +91,10 @@
     display: table;
     clear: both;
 }
+
+.card-img-top {
+    width: 100%; /* Hace que la imagen ocupe todo el ancho de la tarjeta */
+    height: 200px; /* Ajusta la altura según necesites */
+    object-fit: cover; /* Asegura que la imagen cubra el espacio sin distorsionarse */
+}
+
