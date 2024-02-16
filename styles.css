@@ -22,7 +22,6 @@
     transform: scale(1.05);
 }
 
-
 /* Estilos personalizados para la tarjeta del proyecto */
 .project-card {
     position: relative;
@@ -53,30 +52,3 @@
 .project-card:hover .hover-overlay {
     opacity: 1;
 }
-
-/* Contenedor de proyectos */
-.projects-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center; /* Centra las tarjetas horizontalmente */
-}
-
-/* Ajustes para las tarjetas de proyecto */
-.project-card {
-    width: calc(50% - 10px); /* Ajusta para 2 tarjetas por fila con espacio */
-    margin: 10px;
-    position: relative;
-}
-
-.project-card::after {
-    content: '';
-    display: block;
-    padding-bottom: 100%; /* Esto crea la proporción cuadrada */
-}
-
-.card-img-top {
-    height: 100%; /* Asegura que la imagen cubra la altura ajustada */
-    object-fit: cover; /* Cubre el área sin perder la proporción */
-}
-
-/* Ajustes de hover-overlay y text-overlay como los tienes */
