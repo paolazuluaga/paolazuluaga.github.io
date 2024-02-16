@@ -1,5 +1,10 @@
 /* styles.css */
 
+/* Cambiar el color del nombre en el encabezado */
+header h1 {
+    color: #FF5733; /* Cambia este valor hexadecimal al color deseado */
+}
+
 /* Tu CSS personalizado aquí */
 .header {
     margin-bottom: 2rem;
