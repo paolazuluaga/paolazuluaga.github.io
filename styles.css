@@ -29,33 +29,38 @@
     overflow: hidden;
 }
 
-.hover-overlay {
+.project-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7); /* Atenuación de color negro con opacidad */
-    color: #fff;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semi-transparente */
+    color: white;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease-in-out;
 }
 
-.text-overlay {
+.overlay-text {
     text-align: center;
-    padding: 15px;
+    transform: translateY(20px); /* Desplazar el texto un poco hacia abajo */
+    transition: transform 0.5s ease-in-out;
 }
 
-/* Estilos para cuando se pase el mouse por encima */
-.project-card:hover .hover-overlay {
+/* Cambiar la opacidad y la posición del texto cuando se pasa el mouse */
+.project-card:hover .project-overlay {
     opacity: 1;
 }
 
+.project-card:hover .overlay-text {
+    transform: translateY(0);
+}
 
-//* Ajustar el contenedor de las tarjetas */
+
+/* Ajustar el contenedor de las tarjetas */
 .projects-container {
     display: flex;
     flex-wrap: wrap;
@@ -64,8 +69,8 @@
 
 /* Ajustes específicos para las tarjetas de proyectos para hacerlas cuadradas */
 .card.project-card {
-    width: calc(50% - 50px); /* Ajusta este valor según lo que necesites, restando el espaciado deseado */
-    margin: 5px; /* Espaciado alrededor de las tarjetas */
+    width: calc(50% - 20px); /* Ajusta este valor según lo que necesites, restando el espaciado deseado */
+    margin: 10px; /* Espaciado alrededor de las tarjetas */
 }
 
 .card.project-card .card-img-top {
