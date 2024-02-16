@@ -39,13 +39,15 @@
     object-fit: cover; /* Asegura que la imagen cubra el espacio asignado sin distorsionarse */
 }
 
-.text-overlay-container {
+/* Nuevo contenedor para texto sobre la imagen */
+.text-on-image {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%; /* Ajusta esto si no quieres que ocupe toda la imagen */
+    width: 100%; /* O ajusta este valor para cambiar el ancho del fondo */
     background: rgba(255, 255, 255, 0.5); /* Fondo blanco con transparencia */
-    padding: 10px; /* Añade algo de espacio dentro del contenedor */
+    padding: 10px; /* Ajusta el espaciado interno según sea necesario */
+    color: #000; /* Asegura que el texto sea legible */
 }
 
 .card-body {
