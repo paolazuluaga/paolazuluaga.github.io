@@ -48,6 +48,9 @@
     background: rgba(255, 255, 255, 0.5); /* Fondo blanco con transparencia */
     padding: 10px; /* Ajusta el espaciado interno según sea necesario */
     color: #000; /* Asegura que el texto sea legible */
+    z-index: 5; /* Asegúrate de que esto sea más alto que otros elementos dentro de .card */
+    height: 20%; /* O ajusta según el espacio que necesites */
+    bottom: 0; /* Cambia a 'top: 0;' si quieres que esté en la parte superior */
 }
 
 .card-body {
@@ -73,6 +76,7 @@
     justify-content: center;
     opacity: 0;
     transition: opacity 0.5s ease;
+    z-index: 10; /* Asegura que este valor sea superior al de .text-on-image cuando no hay hover */
 }
 
 .text-overlay {
