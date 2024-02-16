@@ -39,6 +39,25 @@
     object-fit: cover; /* Asegura que la imagen cubra el espacio asignado sin distorsionarse */
 }
 
+.text-overlay-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /* Ajusta esto si no quieres que ocupe toda la imagen */
+    background: rgba(255, 255, 255, 0.5); /* Fondo blanco con transparencia */
+    padding: 10px; /* Añade algo de espacio dentro del contenedor */
+}
+
+.card-body {
+    position: relative;
+    z-index: 2; /* Asegura que el texto se muestre por encima de la imagen */
+}
+
+/* Ajusta el estilo de card-title y card-text según sea necesario */
+.card-title, .card-text {
+    color: #000; /* Asegura que el texto sea legible sobre el fondo claro */
+}
+
 .hover-overlay {
     position: absolute;
     top: 0;
