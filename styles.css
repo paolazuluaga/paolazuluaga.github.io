@@ -26,8 +26,8 @@
 .project-card {
     position: relative;
     overflow: hidden;
-    width: 240px; /* Nuevo ancho para las tarjetas */
-    height: calc(240px * 1024 / 1792); /* Altura calculada para mantener la proporción de 1792x1024 */
+    width: 300px; /* Nuevo ancho para las tarjetas */
+    height: calc(300px * 1024 / 1792); /* Altura calculada para mantener la proporción de 1792x1024 */
     margin: 10px auto; /* Centra las tarjetas y añade un margen */
     display: flex;
     flex-direction: column;
