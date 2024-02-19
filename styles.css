@@ -46,11 +46,11 @@
 }
 
 .interactive-card:hover .card-hover-overlay {
-    opacity: 0;
+    opacity: 1;
 }
 
 .interactive-card:hover .card-img-overlay {
-    opacity: 1;
+    opacity: 0;
 }
 
 .text-description {
