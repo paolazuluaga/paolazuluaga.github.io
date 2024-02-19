@@ -31,7 +31,13 @@
 }
 
 .card-img-overlay {
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con una ligera transparencia */
+    color: #000; /* Color del texto negro */
     transition: opacity 0.5s ease;
+}
+
+.card-text, .card-title {
+    color: inherit; /* Hereda el color del contenedor padre, que es negro */
 }
 
 .card-hover-overlay {
