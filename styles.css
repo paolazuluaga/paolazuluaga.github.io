@@ -46,7 +46,7 @@
 }
 
 .interactive-card:hover .card-img-overlay {
-    opacity: 0;
+    opacity: 1;
 }
 
 .text-description {
