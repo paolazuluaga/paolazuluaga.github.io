@@ -31,13 +31,7 @@
 }
 
 .card-img-overlay {
-    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con una ligera transparencia */
-    color: #000; /* Color del texto negro */
     transition: opacity 0.5s ease;
-}
-
-.card-text, .card-title {
-    color: inherit; /* Hereda el color del contenedor padre, que es negro */
 }
 
 .card-hover-overlay {
@@ -57,4 +51,11 @@
 
 .interactive-card:hover .card-img-overlay {
     opacity: 0;
+}
+
+.text-description {
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con transparencia para el texto */
+    color: #000; /* Color del texto negro */
+    width: 100%; /* O ajusta según necesites */
+    padding: 10px; /* Añade algo de espacio dentro del contenedor de texto */
 }
