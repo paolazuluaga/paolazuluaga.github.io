@@ -54,6 +54,7 @@
 }
 
 .text-description {
+    text-align: center; /* Centra el texto horizontalmente */
     background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con transparencia para el texto */
     color: #000; /* Color del texto negro */
     width: 100%; /* O ajusta según necesites */
