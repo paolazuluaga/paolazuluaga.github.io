@@ -45,10 +45,6 @@
     background-color: rgba(0, 0, 0, 0.3); /* Fondo semitransparente para el hover */
 }
 
-.interactive-card:hover .card-hover-overlay {
-    opacity: 1;
-}
-
 .interactive-card:hover .card-img-overlay {
     opacity: 0;
 }
