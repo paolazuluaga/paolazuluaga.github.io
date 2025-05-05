@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Preprocesamiento – Imágenes UAV</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <header class="main-header header-proyecto">
+    <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center px-4">
+      <a href="../index.html" class="text-white text-decoration-none m-0">Portafolio: Paola Mejía-Zuluaga</a>
+      <nav class="nav">
+        <a class="nav-link" href="../index.html">Inicio</a>
+        <a class="nav-link" href="#contacto">Contacto</a>
+        <a class="nav-link" href="https://www.linkedin.com/in/zuluagapaola/" target="_blank">LinkedIn</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="seccion-titulo-proyecto text-center mb-4">
+    <h2 class="titulo-tarjeta-proyecto bg-sombra">
+      <i class="fas fa-database icono-titulo"></i>
+      Preprocesamiento de imágenes Multiespectrales UAV <span class="resaltado">- Entrenamiento de Modelos de Inteligencia Artificial</span>
+    </h2>
+    <div class="decorador-subrayado"></div>
+  </div>
+
+  <main class="container mt-5 mb-5">
+    <div class="mx-auto" style="max-width: 900px; padding-left: 1rem; padding-right: 1rem;">
+      <div class="card-proyecto p-4">
+        <div class="card-body texto-ajustado px-3">
+          <h2 class="titulo-proyecto">
+            Módulos de preprocesamiento para imágenes multiespectrales obtenidas por dron
+          </h2>
+          <p class="mt-4">
+            Estos módulos reúnen herramientas desarrolladas en Python para el preprocesamiento de imágenes aéreas multiespectrales y RGB capturadas mediante el dron P4 Multiespectral. Su propósito es estandarizar y automatizar las tareas necesarias para que las imágenes estén listas para análisis espectral, detección automatizada o integración en sistemas GIS. </p>
+          <p>El preprocesamiento contempla dos componentes principales: la corrección geométrica y coregistro espectral de las bandas multiespectrales, y la corrección radiométrica orientada a la obtención de valores de reflectancia calibrados. Ambos procesos están pensados para operar sobre volúmenes grandes de datos en diferentes zonas de estudio.</p>
+          <p>Las funciones están organizadas de forma modular y permiten su ejecución independiente o en cadena, con el objetivo de mantener la flexibilidad en distintos contextos de trabajo, como clasificación con redes neuronales, generación de índices espectrales o análisis multitemporal. </p>
+        </div>
+      </div>
+
+      <!-- Contenedor coreccion geometrica -->
+      <div class="card-proyecto mt-5">
+        <div class="card-body texto-ajustado px-3">
+          <h3>Módulo 1: Corrección geométrica y coregistro de bandas espectrales (UAV)</h3>
+          <p>
+            Este componente corrige distorsiones geométricas presentes en las imágenes multiespectrales y RGB capturadas por dron, y alinea todas las bandas espectrales respecto a la banda NIR, considerada como referencia. Posteriormente, genera una imagen RGB visualmente alineada con la imagen multiespectral. El módulo está diseñado para funcionar de forma automática sobre carpetas por zona de estudio.
+          </p>
+          <br>
+          <div class="text-center mt-3">
+            <a href="../docs/modulos_preprocesamiento_espectral/1_correccion_geometrica/ReadMe.html" class="btn-azul">Explorar módulo</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contenedor correccion radiometrica-->
+      <div class="card-proyecto mt-5">
+        <div class="card-body texto-ajustado px-3">
+          <h3>Módulo 2: Corrección radiométrica de imágenes multiespectrales (UAV)</h3>
+          <p>
+            Este componente transforma las imágenes multiespectrales capturadas por el dron en productos calibrados en reflectancia, eliminando los efectos de iluminación y condiciones atmosféricas. El módulo opera sobre carpetas por zona de estudio, identifica automáticamente los metadatos disponibles o los genera si no existen, y aplica un modelo físico de corrección basado en la información EXIF y los coeficientes de calibración del sensor.
+          </p>
+          <br>
+          <div class="text-center mt-3">
+            <a href="../docs/modulos_preprocesamiento_espectral/2_correccion_radiometrica/" class="btn-azul">Explorar módulo</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

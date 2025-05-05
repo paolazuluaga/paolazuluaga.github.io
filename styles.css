@@ -2,7 +2,7 @@
 
 /* Tu CSS personalizado aquí */
 .header {
-    margin-bottom: 2rem;
+    margin-bottom: 0rem;
 }
 
 .nav-link {
@@ -18,12 +18,18 @@
     transition: transform 0.3s ease-in-out;
 }
 
-.card:hover {
+.card.zoom:hover {
     transform: scale(1.05);
 }
 
 
-/* styles.css */
+
+/* CARDS*/
+
+.custom-card-row .col-md-6 {
+    max-width: 500px;     /* o 350px si lo quieres más angosto */
+    flex: 0 0 auto;
+}
 
 .interactive-card {
     position: relative;
@@ -40,23 +46,499 @@
     left: 0;
     width: 100%;
     height: 100%;
+    background-color: rgba(41, 41, 40, 0.8);
+    color: rgb(220, 239, 216);
+    text-align: center;
+    padding: 1rem;
+    border-radius: 10px;
     opacity: 0;
-    transition: opacity 0.5s ease;
-    background-color: rgba(0, 0, 0, 0.3); /* Fondo semitransparente para el hover */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: opacity 0.4s ease;
+    z-index: 10;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    pointer-events: none;  /* Esto evita que se superponga a la imagen base */
 }
 
 .interactive-card:hover .card-hover-overlay {
     opacity: 1;
+    pointer-events: auto;  /* Se reactiva cuando el hover entra */
 }
 
-.interactive-card:hover .card-img-overlay {
+.card-hover-overlay .hover-content {
     opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
 }
+
+.interactive-card:hover .card-hover-overlay .hover-content {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.interactive-card:hover .btn-outline-light {
+    background-color: #294936;
+    color: #F9F9F6;
+}
+
+
+
 
 .text-description {
-    text-align: center; /* Centra el texto horizontalmente */
-    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con transparencia para el texto */
-    color: #000; /* Color del texto negro */
-    width: 100%; /* O ajusta según necesites */
-    padding: 10px; /* Añade algo de espacio dentro del contenedor de texto */
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.7); /* Blanco más translúcido */
+    color: #0d0d0d;
+    text-align: center;
+    padding: 0.75rem 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    font-weight: 500;
+    font-size: 1.05rem;
+    backdrop-filter: blur(2px); /* efecto sutil de desenfoque detrás */
 }
+
+
+.card-title {
+    font-size: 0.95rem;  /* o 1rem si lo quieres un poco más grande */
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+
+  .text-description h5 {
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-align: center;
+    margin: 0.25rem 0;
+  }
+  
+  
+
+
+/* PROYECTOS CARDS */
+
+/* Ajuste global del contenido para el módulo de documentación */
+.texto-ajustado {
+    font-size: 0.92rem;
+    text-align: justify;
+}
+
+/* Tamaño y espaciado de encabezados dentro del contenido */
+.texto-ajustado h1 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    text-align: left;
+    margin-bottom: 1.5rem;
+}
+
+.texto-ajustado h3 {
+    font-size: 1.15rem;
+    font-weight: 500;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.texto-ajustado ul,
+.texto-ajustado ol {
+    padding-left: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.texto-ajustado li {
+    margin-bottom: 0.25rem;
+}
+
+
+
+/* Aplicar a todas las listas con o sin clases */
+ul li {
+    line-height: 1.2;
+    margin-bottom: 0.2rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    font-size: 0.95rem;
+}
+
+/* Ajuste específico para listas de Bootstrap */
+.list-group-item {
+    line-height: 1.5 !important;
+    padding-top: 0.2rem !important;
+    padding-bottom: 0.2rem !important;
+    margin-bottom: 0rem !important;
+    font-size: 0.9rem !important;
+}
+
+/* Custom header proyectos */
+.custom-header {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
+    margin-bottom: 1.5rem;
+    font-family: 'Poppins', sans-serif;
+  }
+
+/* Estilo personalizado para el encabezado */
+header.main-header {
+    background-color: #78866B;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-bottom: 2px solid #dcefd8; /* Línea sutil para separar */
+    padding-top: 2rem !important;
+    padding-bottom: 0rem;
+    text-align: center;
+    position: relative;
+    margin-bottom: 0;     /* elimina separación con el contenido que sigue */
+  }
+  
+  .nav-link {
+    margin-left: 1rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #000000 !important; /* negro suave */
+    transition: color 0.3s ease;
+    letter-spacing: 0.2px;
+  }
+
+
+  .nav-link:hover {
+    /* background-color: rgba(255, 255, 255, 0.15);  Sutil fondo translúcido */
+    color: #F47C3C !important;
+    text-decoration: underline;
+  }
+
+  nav.nav {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  
+  
+  
+  header h1,
+  header p {
+    color: #F9F9F9; /* Casi blanco */
+  }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  }
+  
+  h2, .subtitulo {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #EFE9E1;
+    margin-top: 0.5rem;
+  }
+  
+  h2, h3, h4 {
+    color: #2F2F2F;
+  }
+  
+  
+  /* Tipografía general */
+  body {
+    background-color: #F9F9F6;
+    color: #2F2F2F;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  
+  
+
+  
+  /* Botones*/
+  .btn-outline-light {
+    color: #294936;
+    border-color: #294936;
+  }
+  
+  .btn-outline-light:hover {
+    background-color: #294936;
+    color: #F9F9F6;
+  }
+
+  .btn-azul {
+    background-color: #26547C; /* Azul del título */
+    color: #F9F9F6;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-radius: 1.5rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .btn-azul:hover {
+    background-color: #B45A3C; /* Terracota */
+    color: #ffffff;
+    text-decoration: none;
+  }
+  
+  
+
+  /* Enlaces*/
+  a {
+    color: #2F2F2F;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    color: #5D6D7E;
+    text-decoration: underline;
+  }
+  
+  
+  .perfil {
+    width: 160px;              /* ajusta el valor según se necesite */
+    aspect-ratio: 1/1;
+    object-fit: cover; /* asegura que se vea más cercana sin deformarse */
+    border-radius: 100%;
+    border: 3px solid #F8F8F8; /* borde claro para destacar sobre el fondo oscuro */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15); /* sombra suave */
+    margin-top: -20px;         /* para que se superponga ligeramente el encabezado */
+  }
+  
+
+
+
+
+
+
+
+  /* ESTILO DE LOS PROYECTOS (TARJETAS)*/
+
+.titulo-proyecto {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #294936;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    text-shadow: none;
+  }
+  
+  .card-proyecto {
+    background-color: #ffffff;
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); /* sombra más marcada */
+    color: #2F2F2F;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding-top: 0rem !important;
+    padding-bottom: 1rem !important;
+  }
+  
+  .contenido-proyecto {
+    max-width: 850px;
+    margin: auto;
+  }
+  
+  .card-proyecto h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    color: #18452a;
+  }
+  
+  .card-proyecto em {
+    font-style: italic;
+    color: #5D6D7E;
+  }
+
+  /* Encabezado más pequeño solo para proyectos */
+.header-proyecto {
+    padding-top: 1.2rem;
+    padding-bottom: 1.2rem;
+    font-size: 0.9rem;
+}
+
+.header-proyecto a.text-white {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #ffffff !important;
+    margin: 0;
+}
+
+
+.header-proyecto .nav-link {
+    font-size: 0.9rem;
+}
+
+
+
+.seccion-titulo-proyecto {
+    margin-top: 2.5rem;
+  }
+  
+  .titulo-tarjeta-proyecto {
+    display: inline-block;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #042d86; /* Azul profesional */
+    letter-spacing: 0.4px;
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    background-color: #EFE9E1;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  }
+  
+  .titulo-tarjeta-proyecto .resaltado {
+    color: #5D6D7E;
+    font-weight: 500;
+  }
+  
+  .icono-titulo {
+    margin-right: 0.6rem;
+    color: #F47C3C; /* terracota */
+    font-size: 1.2rem;
+    vertical-align: middle;
+  }
+  
+  .decorador-subrayado {
+    height: 3px;
+    width: 90px;
+    background-color: #F47C3C;
+    margin: 0.6rem auto 0;
+    border-radius: 2px;
+  }
+  
+  
+
+
+
+
+  /* PUBLICACIONES */
+
+  .seccion-publicacion {
+    padding-top: 2rem;
+    border-top: 1px solid #dcdcdc;
+}
+
+.titulo-seccion {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #18452a;
+    margin-bottom: 1rem;
+}
+
+.preview-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.overlay-difuminado {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0));
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    padding-bottom: 1.5rem;
+}
+
+.btn-ver-articulo {
+    background-color: #26547C;
+    color: #ffffff;
+    border: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn-ver-articulo:hover {
+    background-color: #B45A3C;
+    color: #fff;
+}
+
+.preview-wrapper img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: auto;
+  }
+
+  
+  .preview-wrapper {
+    max-width: 850px;
+    margin: auto;
+  }
+  
+
+
+
+
+
+    /* MODAL - VENTANA EMERGENTE DE PUBLICACIONES*/
+
+    .modal-content {
+        background: rgba(255, 255, 255, 0.85); /* fondo blanco translúcido */
+        backdrop-filter: blur(10px);          /* efecto de desenfoque detrás */
+        border: none;
+        border-radius: 1rem;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+        padding: 1.5rem;
+    }
+    
+    .modal-header {
+        border-bottom: none;
+        padding-bottom: 0.5rem;
+        background: transparent;
+    }
+    
+    .modal-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #294936; /* Verde mineral */
+    }
+    
+    .modal-body {
+        padding-top: 0.5rem;
+    }
+    
+    .modal-dialog {
+        max-width: 90%;
+        margin: 2rem auto;
+    }
+    
+    .modal-backdrop.show {
+        background-color: rgba(0, 0, 0, 0.4); /* oscuro, más moderno */
+    }
+    
+    .close {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: #5D6D7E;
+        opacity: 1;
+    }
+    
+    .close:hover {
+        color: #000;
+    }
+
+
+    .btn-descargar-pdf {
+        font-size: 1.2rem;
+        color: #294936;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.3rem;
+        margin-right: 0.25rem;
+        display: flex;
+        align-items: center;
+        transition: color 0.3s ease;
+      }
+      
+      .btn-descargar-pdf:hover {
+        color: #B45A3C;
+      }
+      

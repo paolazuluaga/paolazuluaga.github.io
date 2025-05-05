@@ -3,81 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paola Zuluaga</title>
+    <title>Paola Mejia-Zuluaga, PhD(c)</title>
     <!-- Incluye Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Incluye tu archivo CSS personalizado después de bootstrap para sobrescribir estilos si es necesario -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<header class="bg-light text-center py-5">
-    <img src="ruta-a-tu-imagen.jpg" alt="Fotografía" class="rounded-circle mb-3">
-    <h1>Hi, I'm Paola Zuluaga!</h1>
-    <p class="lead">I'm a Geospatial Scientist passionate about the territorial analysis, data analysis, geographic visualization.</p>
+<header class="text-center main-header">
+    <img src="imgs/foto_perfil2.png" alt="Paola Zuluaga" class="perfil">
+    <h1>Paola Mejia-Zuluaga, PhD(c)</h1>
+    <p class="lead">Especialista en Ciencia de Datos Geoespaciales & Teledetección AI</p>
     <nav class="nav justify-content-center">
-        <a class="nav-link" href="#about">About</a>
-        <a class="nav-link" href="#contact">Contact</a>
-        <a class="nav-link" href="ruta-a-tu-cv.pdf" target="_blank">Resume</a>
+        <a class="nav-link" href="#about">Sobre mí</a>
+        <a class="nav-link" href="#contact">Contacto</a>
+        <a class="nav-link" href="ruta-a-tu-cv.pdf" target="_blank">CV</a>
         <a class="nav-link" href="https://www.linkedin.com/in/zuluagapaola/" target="_blank">LinkedIn</a>
     </nav>
 </header>
 
 <main class="container mt-5">
-    <div class="row">
+    <div class="row justify-content-center custom-card-row">
         <!-- Tarjeta 1 -->
         <div class="col-md-6 mb-4">
-            <div class="card interactive-card">
+            <div class="card interactive-card zoom">
                 <img src="imgs/card_platform.jpg" class="card-img-top" alt="...">
                 <div class="card-img-overlay d-flex align-items-end p-0">
                     <div class="text-description bg-white text-dark"> <!-- Nuevo contenedor para el fondo -->
-                        <h5 class="card-title">Geospatial & Research Platforms</h5>
+                        <h5 class="card-title">Artificial Intelligence & Geosciences (GP)</h5>
                     </div>
                 </div>
-                <div class="card-hover-overlay bg-dark text-white d-flex justify-content-center align-items-center">
-                    <p>Descripción del Hover</p>
+                <div class="card-hover-overlay d-flex justify-content-center align-items-center flex-column">
+                    <div class="w-100 px-3">
+                        <p class="mb-2">Algoritmo en Matlab para clasificación de muérdago en imágenes multiespectrales</p>
+                        <br>
+                        <div class="d-flex justify-content-center">
+                          <a href="proyectos/gp.html" class="btn btn-outline-light btn-sm">Ver más</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <!-- Tarjeta 2 -->
         <div class="col-md-6 mb-4">
-            <div class="card interactive-card">
+            <div class="card interactive-card zoom">
                 <img src="imgs/card_research2.jpg" class="card-img-top" alt="...">
                 <div class="card-img-overlay d-flex align-items-end p-0">
                     <div class="text-description bg-white text-dark"> <!-- Nuevo contenedor para el fondo -->
-                        <h5 class="card-title">Artificial Inteligencia & Geosciences</h5>
+                        <h5 class="card-title">Preprocesamiento Datos Multiespectrales</h5>
                     </div>
                 </div>
-                <div class="card-hover-overlay bg-dark text-white d-flex justify-content-center align-items-center">
-                    <p>Descripción del Hover</p>
+                <div class="card-hover-overlay d-flex justify-content-center align-items-center">
+                    <div class="w-100 px-3">
+                        <p class="mb-2">Módulo en Python para corrección radiométrica y geométrica de imágenes multiespectrales</p>
+                        <br>
+                        <div class="d-flex justify-content-center">
+                          <a href="proyectos/Preprocesamiento.html" class="btn btn-outline-light btn-sm">Ver más</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <!-- Tarjeta 3 -->
         <div class="col-md-6 mb-4">
-            <div class="card interactive-card">
-                <img src="imgs/card_geospatial_analysis.jpg" class="card-img-top" alt="...">
+            <div class="card interactive-card zoom">
+                <img src="imgs/card_notebooks1.jpg" class="card-img-top" alt="...">
                 <div class="card-img-overlay d-flex align-items-end p-0">
                     <div class="text-description bg-white text-dark"> <!-- Nuevo contenedor para el fondo -->
-                        <h5 class="card-title">Geospatial Analysis & Dasboard</h5>
+                        <h5 class="card-title">Machine Learning Notebooks (SVM + GA)</h5>
                     </div>
                 </div>
-                <div class="card-hover-overlay bg-dark text-white d-flex justify-content-center align-items-center">
-                    <p>Descripción del Hover</p>
+                <div class="card-hover-overlay d-flex justify-content-center align-items-center">
+                    <div class="w-100 px-3">
+                        <p class="mb-2">Notebooks con clasificación SVM, selección de descriptores y generación de dataset</p>
+                        <br>
+                        <div class="d-flex justify-content-center">
+                          <a href="proyectos/gp.html" class="btn btn-outline-light btn-sm">Ver más</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <!-- Tarjeta 4 -->
         <div class="col-md-6 mb-4">
-            <div class="card interactive-card">
-                <img src="imgs/card_notebooks2.jpg" class="card-img-top" alt="...">
+            <div class="card interactive-card zoom">
+                <img src="imgs/card_geospatial_analysis.jpg" class="card-img-top" alt="...">
                 <div class="card-img-overlay d-flex align-items-end p-0">
                     <div class="text-description bg-white text-dark"> <!-- Nuevo contenedor para el fondo -->
-                        <h5 class="card-title">Notebooks</h5>
+                        <h5 class="card-title">Dashboard Geoweb</h5>
                     </div>
                 </div>
-                <div class="card-hover-overlay bg-dark text-white d-flex justify-content-center align-items-center">
-                    <p>Descripción del Hover</p>
+                <div class="card-hover-overlay d-flex justify-content-center align-items-center">
+                    <div class="w-100 px-3">
+                        <p class="mb-2">Dashboard geoweb en desarrollo para visualizar muestreo de campo</p>
+                        <br>
+                        <div class="d-flex justify-content-center">
+                          <a href="proyectos/gp.html" class="btn btn-outline-light btn-sm">Ver más</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Tarjeta 5 -->
+        <div class="col-md-6 mb-4">
+            <div class="card interactive-card zoom">
+                <img src="imgs/card_papers3.png" class="card-img-top" alt="...">
+                <div class="card-img-overlay d-flex align-items-end p-0">
+                    <div class="text-description bg-white text-dark"> <!-- Nuevo contenedor para el fondo -->
+                        <h5 class="card-title">Publicaciones científicas y colaboraciones</h5>
+                    </div>
+                </div>
+                <div class="card-hover-overlay d-flex justify-content-center align-items-center">
+                    <div class="w-100 px-3">
+                        <p class="mb-2">Publicaciones arbitradas y Colaboraciones territoriales</p>
+                        <br>
+                        <div class="d-flex justify-content-center">
+                          <a href="proyectos/gp.html" class="btn btn-outline-light btn-sm">Ver más</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -85,7 +129,7 @@
 </main>
 
 <footer class="bg-dark text-white text-center py-3 mt-5">
-    <p>© 2024 - Paola Mejia-Zuluaga. Todos los derechos reservados.</p>
+    <p>© 2025 - Paola Mejia-Zuluaga. Todos los derechos reservados.</p>
 </footer>
 
 <!-- Incluye Bootstrap JS y dependencias -->

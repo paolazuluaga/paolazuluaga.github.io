@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Programación Genética – Detección de muérdago</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+</head>
+
+
+<body>
+
+  <header class="main-header header-proyecto">
+    <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center px-4">
+      <a href="../index.html" class="text-white text-decoration-none m-0">Portafolio: Paola Mejía-Zuluaga</a>
+      <nav class="nav">
+        <a class="nav-link" href="../index.html">Inicio</a>
+        <a class="nav-link" href="#contacto">Contacto</a>
+        <a class="nav-link" href="https://www.linkedin.com/in/zuluagapaola/" target="_blank">LinkedIn</a>
+      </nav>
+    </div>
+  </header>
+  
+  <div class="seccion-titulo-proyecto text-center mb-4">
+    <h2 class="titulo-tarjeta-proyecto bg-sombra">
+      <i class="fas fa-seedling icono-titulo"></i>
+      Artificial Intelligence & Geosciences <span class="resaltado">(GP)</span>
+    </h2>
+    <div class="decorador-subrayado"></div>
+  </div>
+  
+  <main class="container mt-5 mb-5">
+    <div class="mx-auto" style="max-width: 900px; padding-left: 1rem; padding-right: 1rem;">
+      <div class="card-proyecto p-4">
+        <div class="card-body texto-ajustado px-3">
+          <h2 class="titulo-proyecto">
+            Algoritmo de Programación Genética para la detección de <em>Phoradendron velutinum</em>
+          </h2>
+          <p class="mt-4">
+            Este módulo implementa un sistema de clasificación mediante Programación Genética (GP) en MATLAB, orientado a detectar infestaciones de <i>Phoradendron velutinum</i> (muérdago) en imágenes multiespectrales aéreas capturadas con dron en áreas verdes urbanas de la Ciudad de México. El código está basado en el toolbox <strong>GPLAB</strong>, adaptado específicamente a las necesidades del análisis espectral de vegetación parasitaria.
+          </p>
+          <br>
+
+          <h3 class="mt-4">Objetivo del modelo</h3>
+          <p>
+            Diseñar y evolucionar funciones simbólicas capaces de distinguir áreas infestadas por muérdago a partir de la combinación no lineal de bandas espectrales. La salida del modelo es una máscara binaria que identifica píxeles positivos a infestación.
+          </p>
+          <br>
+
+          <h3 class="mt-4">Tipo de imágenes utilizadas</h3>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Sensor:</strong> DJI P4 Multispectral</li>
+            <li class="list-group-item"><strong>Resolución:</strong> 1600 × 1300 px</li>
+            <li class="list-group-item"><strong>Bandas:</strong> Red, Green, Blue, RedEdge, Near-Infrared (NIR)</li>
+            <li class="list-group-item"><strong>Formato:</strong> TIFF multibanda</li>
+            <li class="list-group-item"><strong>Fuente:</strong> Base de datos publicada en Figshare <a href="https://doi.org/10.6084/m9.figshare.28654691.v1" target="_blank">ver dataset</a></li>
+          </ul>
+          <br>
+
+          <h3 class="mt-4">Funcionamiento del algoritmo</h3>
+          <p>
+            El sistema inicia con una población aleatoria de árboles generados mediante el método <strong>Ramped Half and Half</strong>, los cuales evolucionan a través de generaciones utilizando operadores de cruce, mutación y reproducción. Cada árbol representa una combinación simbólica de bandas espectrales y operadores.
+          </p>
+          <br>
+
+          <h3>Componentes de la Programación Genética</h3>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Terminales:</strong> R, G, B, Rd (RedEdge), N (NIR)</li>
+            <li class="list-group-item"><strong>Funciones:</strong> <code>+, -, *, /, sqrt, log, threshold, &gt;, &lt;, and, or, not</code></li>
+            <li class="list-group-item"><strong>Fitness:</strong> Métrica personalizada que evalúa detección de muérdago contra máscara de referencia</li>
+            <li class="list-group-item"><strong>Criterio de parada:</strong> Número máximo de generaciones o estancamiento</li>
+          </ul>
+          <br>
+
+          <h3 class="mt-4">Hiperparámetros principales</h3>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Población:</strong> 100 individuos</li>
+            <li class="list-group-item"><strong>Generaciones:</strong> 50</li>
+            <li class="list-group-item"><strong>Profundidad máxima:</strong> 10</li>
+            <li class="list-group-item"><strong>Selección:</strong> Torneo léxico con niching dinámico</li>
+            <li class="list-group-item"><strong>Probabilidades:</strong> 0.7 cruce, 0.2 mutación, 0.1 reproducción</li>
+            <li class="list-group-item"><strong>Elitismo:</strong> Sí (el mejor modelo se conserva)</li>
+          </ul>
+          <br>
+
+          <h3 class="mt-4">Entrada y salida</h3>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Entrada:</strong> Carpeta con imágenes TIFF multibanda + máscaras de entrenamiento</li>
+            <li class="list-group-item"><strong>Procesamiento:</strong> GP sobre regiones segmentadas para evaluar función de aptitud</li>
+            <li class="list-group-item"><strong>Salida:</strong> Modelo GP (.mat), logs de evolución, máscara binaria generada</li>
+          </ul>
+          <br>
+
+          <h3 class="mt-4">Personalizaciones clave al framework GPLAB</h3>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Adaptación de la estructura de terminales y funciones para representar bandas espectrales</li>
+            <li class="list-group-item">Implementación de funciones personalizadas como <code>ip_imadd</code> y <code>ip_fitness</code></li>
+            <li class="list-group-item">Integración de control de complejidad para evitar sobreajuste</li>
+            <li class="list-group-item">Exportación automática del modelo y resultados para visualización en GIS</li>
+          </ul>
+          <br>
+
+          <h3 class="mt-4">Resultados esperados</h3>
+          <p>
+            El modelo GP logra generar funciones simbólicas que detectan de forma precisa áreas infestadas por muérdago, incluso cuando hay similitud visual con el follaje del hospedero. Este enfoque mejora la interpretabilidad respecto a modelos de caja negra como CNNs y permite evaluar la importancia relativa de cada banda espectral en la toma de decisión.
+          </p>
+          <br>
+
+          <div class="text-center mt-4">
+            <a href="https://drive.google.com/file/d/1ClFJtpCGyt7zoCBauMnp96ji4oOyUJeu/view?usp=sharing" target="_blank" class="btn-azul">
+              Descargar código desde Google Drive
+            </a>
+          </div>
+        </div>
+      </div>
+
+          <!-- Contenedor para publicación del artículo -->
+      <section class="seccion-publicacion mt-5 mb-5">
+        <div class="contenido-proyecto">
+          <h3 class="titulo-seccion">Publicación científica</h3>
+          <div class="preview-wrapper">
+            <img src="../imgs/paper_GP_PVelutinum_MDPI.JPG" alt="Vista previa del artículo" class="img-fluid rounded">
+            <div class="overlay-difuminado">
+              <button class="btn-ver-articulo" data-toggle="modal" data-target="#modalArticulo">Leer artículo completo</button>
+            </div>
+          </div>
+        </div>
+      </section>    
+    </div>
+  </main>
+
+  <!-- Modal del artículo -->
+  <div class="modal fade" id="modalArticulo" tabindex="-1" role="dialog" aria-labelledby="modalArticuloLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Artículo completo</h5>
+          <div class="d-flex align-items-center">
+            <a href="../docs/GP_PVelutinum_MDPI.pdf" download="GP_PVelutinum_MDPI.pdf" class="btn-descargar-pdf" title="Descargar PDF">
+              <i class="fas fa-download"></i>
+            </a>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+        <div class="modal-body">
+          <iframe src="../docs/GP_PVelutinum_MDPI.pdf#toolbar=0" width="100%" height="600px" style="border:none;"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    function descargarPDF() {
+      fetch('../docs/GP_PVelutinum_MDPI.pdf')
+        .then(response => response.blob())
+        .then(blob => {
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'GP_PVelutinum_MDPI.pdf';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+        })
+        .catch(() => alert('No se pudo descargar el archivo.'));
+    }
+  </script>
+</body>
+</html>
