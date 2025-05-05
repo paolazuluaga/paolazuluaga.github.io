@@ -405,7 +405,109 @@ header.main-header {
   }
   
   
+  .codigo-bloque {
+    background-color: #EFE9E1; /* Fondo arena clara */
+    color: #2F2F2F; /* Texto gris carbón */
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.65rem;
+    padding: 1rem 1.2rem;
+    border-radius: 0.75rem;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+    border-left: 5px solid #B45A3C; /* Terracota para énfasis */
+  }
 
+  .codigo-bloque code {
+      background: none;
+      color: inherit;
+  }
+
+  code {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.85rem;
+    color: #294936 !important; /* Verde mineral oscuro */
+    background-color: #eef0eb; /* Fondo técnico suave */
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+  }
+
+
+  .subtitulo-proyecto {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #294936;
+    border-bottom: 2px solid #B45A3C;
+    padding-bottom: 0.4rem;
+    margin-bottom: 1rem;
+  }
+  
+
+  /* Botones desplegables modulos*/
+  .accordion-button {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: 2px solid #294936;
+    margin-bottom: 0rem;
+    color: #2F2F2F;
+    background-color: #EFE9E1;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: 1rem;
+    cursor: pointer;
+  }
+
+
+  .accordion-button:hover {
+    background-color: #dcd5cc;
+    color: #294936;
+  }
+  
+  .accordion-button:not(.collapsed) {
+    background-color: #EFE9E1;
+    color: #294936;
+    box-shadow: none;
+  }
+  
+  /* Remueve ícono predeterminado */
+  .accordion-button::after {
+    content: "";
+    display: none;
+  }
+
+  /* Flechita personalizada */
+  .accordion-button::before {
+    content: "\25BC"; /* Flecha hacia abajo (▼) */
+    font-size: 0.85rem;
+    color: #294936;
+    position: absolute;
+    right:0rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+    font-size: 1rem;
+    top: 52%; /* Ajuste fino para centrar mejor */
+  }
+
+  /* Rotar flecha si está desplegado */
+  .accordion-button:not(.collapsed)::before {
+    transform: translateY(-50%) rotate(180deg);
+  }
+  
+  /* Animación de Titileo */
+  .blinking {
+    animation: blink-animation 2.5s infinite;
+  }
+  @keyframes blink-animation {
+    0% {opacity: 1;}
+    50% {opacity: 0.5;}
+    100% {opacity: 1;}
+  }
 
 
 
@@ -542,3 +644,24 @@ header.main-header {
         color: #B45A3C;
       }
       
+
+    /* Footer modulos*/
+      .footer-custom {
+        font-size: 0.8rem;
+        text-align: right;
+        color: #666666;
+        background-color: transparent;
+        padding: 1rem 2rem;
+        margin-top: 4rem;
+        line-height: 0.5; /* <--- Esto reduce el espacio entre líneas */
+    }
+    
+    .footer-custom a {
+        color: #5D6D7E;
+        text-decoration: none;
+    }
+    
+    .footer-custom a:hover {
+        text-decoration: underline;
+    }
+    

@@ -8,17 +8,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <style>
-        /* Animación de Titileo */
-        .blinking {
-            animation: blink-animation 1s infinite;
-        }
-        @keyframes blink-animation {
-            0% {opacity: 1;}
-            50% {opacity: 0.5;}
-            100% {opacity: 1;}
-        }
-    </style>
 </head>
 <body style="background-color: #F9F9F6;">
 
@@ -31,684 +20,683 @@
         <a class="nav-link" href="https://www.linkedin.com/in/zuluagapaola/" target="_blank">LinkedIn</a>
         </nav>
     </div>
-    </header>
+</header>
 
-<div class="container">
-    <h1 class="text-primary text-center mt-5">Módulo de Corrección Geométrica y Coregistro de Imágenes</h1>
-    <p class="lead text-center">
-        Sistema modular para la corrección geométrica y coregistro espectral de imágenes aéreas multiespectrales capturadas por dron, con generación automática de productos RGB para tareas de segmentación.
-        </p>
-    <hr>
-    <br>
+<main class="container mt-5 mb-5">
+    <div class="mx-auto" style="max-width: 900px; padding-left: 1rem; padding-right: 1rem;">
+        
+        <h1 class="titulo-proyecto text-center mt-5 mb-3">Módulo de Corrección Geométrica y Coregistro de Imágenes</h1>
+        <p class="lead text-center">
+            Sistema modular para la corrección geométrica y coregistro espectral de imágenes aéreas multiespectrales capturadas por dron, con generación automática de productos RGB para tareas de segmentación.
+            </p>
+        <hr>
+        <br>
 
-    <div class="container container-custom mt-5">
-        <section class="card shadow-sm p-4 mb-4">
-            <!--Descripción General-->
-            <h2 class="h4 fw-bold">Descripción General</h2>
-            <p>              
+        <div class="container container-custom mt-5">
+            <section class="card-proyecto p-4 mb-4">
+                <!--Descripción General-->
+                <h3 class="subtitulo-proyecto mt-5">Descripción General</h3>
+                <p>              
+                    <p>
+                    Este módulo está diseñado para procesar imágenes crudas capturadas por drones multiespectrales, corrigiendo las distorsiones geométricas propias de la lente y la orientación del sensor, y posteriormente alineando todas las bandas espectrales sobre una geometría común. Este paso es esencial para garantizar la integridad espacial de los datos y permitir análisis espectrales fiables para la clasificación automática del muérdago.
+                    </p>
+                    
+                    <p>
+                    El procesamiento se ejecuta por <strong>zonas de estudio</strong>, cada una organizada en una carpeta independiente, y consta de tres etapas principales:
+                    </p>
+                    
+                    <ol>
+                        <li><strong>Corrección Geométrica:</strong> Aplica una corrección de distorsión de lente basada en los parámetros de calibración óptica (longitud focal, centro óptico y coeficientes de distorsión), seguida de una corrección de perspectiva si la imagen presenta inclinación (roll, pitch, yaw). Se utiliza una matriz de homografía generada a partir de los metadatos embebidos en cada imagen. Este proceso garantiza que la imagen resultante esté libre de deformaciones ópticas y lista para el alineamiento espectral.</li>
+                    
+                        <li><strong>Coregistro Espectral:</strong> Alinea todas las bandas multiespectrales con respecto a la <strong>banda NIR</strong>, utilizada como referencia fija. Se emplea un método híbrido basado en las recomendaciones del fabricante DJI:
+                            <ul>
+                                <li><em>Traslación inicial</em> mediante los desplazamientos de los centros ópticos, extraídos desde los metadatos.</li>
+                                <li><em>Refinamiento con SIFT</em> (Scale-Invariant Feature Transform), que calcula una homografía entre bandas utilizando puntos clave.</li>
+                            </ul>
+                            El resultado es un conjunto de imágenes multibanda perfectamente alineadas, en las que cada píxel corresponde a la misma ubicación terrestre entre bandas.
+                        </li>
+                    
+                        <li><strong>Generación de Imagen RGB con Apariencia Natural:</strong> Una vez las bandas han sido coregistradas, se genera una imagen RGB a partir de las bandas 3 (Red), 2 (Green) y 1 (Blue). Para mejorar su apariencia visual y facilitar tareas de segmentación o entrenamiento supervisado, se aplica una técnica de <em>transferencia de color</em> basada en el método de Reinhard, que ajusta la tonalidad del RGB multiespectral para imitar la apariencia del JPG original tomado por el dron.
+                        </li>
+                    </ol>
+                    
+                    <p>
+                    El módulo ha sido diseñado con un enfoque <strong>modular, escalable y automatizado</strong>. Está preparado para procesar múltiples zonas en paralelo y es capaz de generar automáticamente los archivos de metadatos requeridos mediante <code>ExifTool</code> en caso de que no estén disponibles. La arquitectura del sistema permite una integración directa con flujos de análisis más amplios, como la clasificación supervisada con aprendizaje automático o la detección de objetos mediante visión por computadora.
+                    </p>
+                <br>
+                <br>
+
+
+                <!--Estructura del Módulo-->
+                <h3 class="subtitulo-proyecto mt-5">Estructura del Módulo</h3>
                 <p>
-                Este módulo está diseñado para procesar imágenes crudas capturadas por drones multiespectrales, corrigiendo las distorsiones geométricas propias de la lente y la orientación del sensor, y posteriormente alineando todas las bandas espectrales sobre una geometría común. Este paso es esencial para garantizar la integridad espacial de los datos y permitir análisis espectrales fiables para la clasificación automática del muérdago.
-                </p>
-                
+                    El <strong>Módulo de Corrección Geométrica y Coregistro</strong> está organizado de forma clara y modular para facilitar su mantenimiento, escalabilidad y reutilización dentro de flujos de análisis espectral. Cada componente cumple una función específica dentro del sistema de preprocesamiento, y su diseño promueve una separación lógica entre configuración, lógica de control y funciones especializadas.
+                    </p>
+                    
+                    <p>
+                    A continuación se presenta la estructura principal del sistema:
+                    </p>
+                    
+                    <pre class="codigo-bloque"><code>1_correccion_geometrica/
+                    │
+                    ├── main_correccion_geometrica.py     # Script principal que ejecuta todo el flujo por zona (corrección, coregistro, RGB)
+                    ├── config.py                         # Archivo de configuración de rutas base, entrada, salida y subcarpetas
+                    ├── requirements.txt                  # Lista de dependencias para instalar el entorno de ejecución
+                    │
+                    ├── data/
+                    │   ├── Input/                        # Carpeta que contiene subcarpetas por cada zona de estudio
+                    │   └── Output/                       # Carpeta donde se guardan los resultados procesados por zona
+                    │
+                    └── scripts/
+                        ├── utils.py                     # Funciones auxiliares para corrección geométrica (distorsión, homografía, recorte)
+                        ├── coregistro.py                # Coregistro multiespectral usando centros ópticos + SIFT
+                        ├── generar_rgb.py              # Generación de imagen RGB con transferencia de color
+                        └── metadata_extractor.py       # Extracción automática de metadatos con ExifTool si no existen
+                    </code></pre>
+                    
+                    <p>
+                    Esta estructura modular permite lo siguiente:
+                    </p>
+                    
+                    <ul>
+                        <li><strong>main_correccion_geometrica.py</strong> actúa como punto de entrada, gestionando el flujo de procesamiento completo por zonas.</li>
+                        <li><strong>config.py</strong> centraliza las rutas del sistema, permitiendo su reutilización por todos los scripts sin modificar el código fuente.</li>
+                        <li>La carpeta <code>scripts/</code> contiene todos los módulos especializados, manteniendo el código organizado, limpio y reutilizable.</li>
+                        <li>La carpeta <code>data/Input/</code> puede contener múltiples zonas a procesar, cada una con su propio conjunto de imágenes y metadatos.</li>
+                        <li>Los resultados se almacenan automáticamente en <code>data/Output/[zona]</code>, en subcarpetas específicas para la etapa de corrección o coregistro.</li>
+                    </ul>
+                <br>
+                <br>
+
+
+                <!--Organización de Datos de Entrada-->
+                <h3 class="subtitulo-proyecto mt-5">Organización de Datos de Entrada</h2>
+
                 <p>
-                El procesamiento se ejecuta por <strong>zonas de estudio</strong>, cada una organizada en una carpeta independiente, y consta de tres etapas principales:
-                </p>
-                
-                <ol>
-                    <li><strong>Corrección Geométrica:</strong> Aplica una corrección de distorsión de lente basada en los parámetros de calibración óptica (longitud focal, centro óptico y coeficientes de distorsión), seguida de una corrección de perspectiva si la imagen presenta inclinación (roll, pitch, yaw). Se utiliza una matriz de homografía generada a partir de los metadatos embebidos en cada imagen. Este proceso garantiza que la imagen resultante esté libre de deformaciones ópticas y lista para el alineamiento espectral.</li>
-                
-                    <li><strong>Coregistro Espectral:</strong> Alinea todas las bandas multiespectrales con respecto a la <strong>banda NIR</strong>, utilizada como referencia fija. Se emplea un método híbrido basado en las recomendaciones del fabricante DJI:
+                    El sistema está diseñado para procesar múltiples <strong>zonas de estudio</strong> de manera autónoma. Cada zona se organiza como una subcarpeta dentro de <code>data/Input/</code> y debe contener los archivos correspondientes a las imágenes capturadas por el dron, tanto en formato multiespectral (<code>.TIF</code>) como RGB (<code>.JPG</code>), además de los metadatos extraídos en formato <code>.csv</code>.
+                    </p>
+                    
+                    <p>
+                    El sistema identifica automáticamente estas zonas mediante el nombre de las subcarpetas y ejecuta todo el flujo de procesamiento secuencialmente: corrección geométrica, coregistro y generación de imágenes RGB.
+                    </p>
+                    
+                    <h6>Estructura esperada en la carpeta <code>Input/</code></h6>
+                    
+                    <pre class="codigo-bloque"><code>
+                    data/
+                    └── Input/
+                        ├── Exconvento/
+                        │   ├── DJI_0010_ob3_j_t1.TIF
+                        │   ├── DJI_0010_ob3_j_t1.JPG
+                        │   ├── DJI_0011_ob3_j_t1.TIF
+                        │   ├── DJI_0011_ob3_j_t1.JPG
+                        │   ├── ...
+                        │   ├── metadata_tif.csv
+                        │   └── metadata_jpg.csv
+                        │
+                        ├── Jardin/
+                        │   ├── DJI_0020_ot3_j_t2.TIF
+                        │   ├── DJI_0020_ot3_j_t2.JPG
+                        │   ├── ...
+                        │   ├── metadata_tif.csv
+                        │   └── metadata_jpg.csv
+                        │
+                        └── OtraZona/
+                            ├── ...
+                    </code></pre>
+                    
+                    <p>
+                    Cada carpeta de zona debe contener:
+                    </p>
+                    
+                    <ul>
+                        <li>Archivos <strong>.TIF</strong> multibanda: capturados por el sensor multiespectral del dron (bandas 1 a 5).</li>
+                        <li>Archivos <strong>.JPG</strong>: imágenes RGB tomadas de manera sincronizada para usar como referencia visual.</li>
+                        <li>Archivos <code>metadata_tif.csv</code> y <code>metadata_jpg.csv</code> que contienen los parámetros de calibración, distorsión, homografía, centros ópticos, etc.</li>
+                    </ul>
+                    
+                    <p>
+                    En caso de que los archivos de metadatos no estén presentes, el sistema <strong>los genera automáticamente</strong> mediante el módulo <code>metadata_extractor.py</code> usando <code>ExifTool</code>. Esta funcionalidad evita errores por omisión y garantiza que todas las zonas puedan ser procesadas sin intervención manual.
+                    </p>
+                    
+                    <p>
+                    Esta organización modular permite escalar el sistema a campañas con múltiples parques, fechas o sitios monitoreados, y facilita la integración en entornos de investigación urbana, seguimiento de especies parasíticas (como el muérdago) o monitoreo ambiental con UAV.
+                    </p>
+                <br>
+                <br>
+
+
+                <!--Organización de Datos de Entrada-->
+                <h3 class="subtitulo-proyecto mt-5">Requerimientos de Software</h3>
+
+                <p>
+                    Para ejecutar correctamente el <strong>Módulo de Corrección Geométrica y Coregistro</strong> se requiere contar con un entorno de Python configurado y con dependencias específicas instaladas. A continuación se detallan los requerimientos necesarios para la ejecución estable y reproducible del sistema.
+                    </p>
+                    
+                    <ul>
+                        <li><strong>Python:</strong> Versión 3.8 o superior.</li>
+                        <li><strong>ExifTool:</strong> Herramienta externa utilizada para extraer metadatos embebidos en archivos <code>.TIF</code> y <code>.JPG</code>.</li>
+                        <li><strong>Bibliotecas de Python:</strong> Listadas en el archivo <code>requirements.txt</code>, deben instalarse ejecutando el siguiente comando desde la raíz del proyecto:</li>
+                    </ul>
+                    
+                    <pre class="codigo-bloque"><code>pip install -r requirements.txt</code></pre>
+                    
+                    <h6 class="fw-bold">Contenido del archivo <code>requirements.txt</code>:</h6>
+                    <pre class="codigo-bloque"><code>
+                    numpy
+                    pandas
+                    rasterio
+                    opencv-python
+                    tifffile
+                    Pillow
+                    </code></pre>
+                    
+                    <h6 class="fw-bold">Instalación de ExifTool:</h6>
+                    <p>ExifTool es un componente externo requerido para la generación automática de metadatos. Debe estar disponible en la consola del sistema:</p>
+                    
+                    <ul>
+                        <li><strong>Windows:</strong> Descargar desde <a href="https://exiftool.org/" target="_blank">https://exiftool.org/</a> y agregar la carpeta al <code>PATH</code>.</li>
+                        <li><strong>Linux (Debian/Ubuntu):</strong> <code>sudo apt install libimage-exiftool-perl</code></li>
+                        <li><strong>macOS:</strong> <code>brew install exiftool</code></li>
+                    </ul>
+                    
+                    <p>
+                    Durante la ejecución, el sistema validará automáticamente la disponibilidad de <code>exiftool</code> y mostrará un mensaje si no se encuentra instalado correctamente. Es necesario contar con este componente para generar los archivos <code>metadata_tif.csv</code> y <code>metadata_jpg.csv</code> si no existen en las carpetas de entrada.
+                    </p>
+                    
+                    <p>
+                    Se recomienda utilizar un entorno virtual para mantener separadas las dependencias del proyecto, evitar conflictos y facilitar la reproducción del flujo de trabajo.
+                    </p>
+            </section>
+        </div>
+        
+
+        <!--Ejemplo de uso-->
+        <div class="container container-custom mt-5">
+            <section class="card-proyecto p-4 mb-4">
+                <h4>Ejemplo de Uso</h4>
+                        <p>
+                            Esta sección describe cómo ejecutar el módulo de <strong>Corrección Geométrica y Coregistro</strong> para preprocesar imágenes multiespectrales capturadas por dron, como parte del sistema inteligente de monitoreo de muérdago en parques urbanos.
+                        </p>
+
+                        <h3 class="section-title">Archivo <code>config.py</code></h3>
+
+                        <p>
+                            El archivo <code>config.py</code> centraliza las rutas y parámetros globales del módulo. Las rutas se definen dinámicamente a partir de la ubicación del script principal, asegurando portabilidad y evitando la necesidad de modificar rutas absolutas.
+                        </p>
+
+                        <pre class="codigo-bloque"><code># config.py
+
+                import os
+
+                BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+                # Directorio donde se encuentran las carpetas por zona de estudio
+                INPUT_DIR = os.path.join(BASE_DIR, "data", "Input")
+
+                # Directorio de salida para las imágenes procesadas
+                OUTPUT_DIR = os.path.join(BASE_DIR, "data", "Output")
+
+                # Subcarpetas específicas para las etapas de procesamiento
+                SUBCARPETA_CORRECCION = "correccion_geometrica"
+                SUBCARPETA_COEGISTRO = "coregistro"
+
+                # Opción para borrar resultados previos
+                LIMPIAR_OUTPUT_ANTES_DE_PROCESAR = True
+
+                # Función auxiliar para listar zonas
+                def listar_zonas_disponibles():
+                    return sorted([
+                        f for f in os.listdir(INPUT_DIR)
+                        if os.path.isdir(os.path.join(INPUT_DIR, f))
+                    ])
+                        </code></pre>
+
+                        <h3 class="section-title">Organización de Archivos</h3>
+
+                        <p>
+                            Dentro del directorio definido como <code>INPUT_DIR</code>, cada subcarpeta representa una zona de estudio que contiene imágenes <code>.TIF</code> (multiespectrales) y opcionalmente <code>.JPG</code> (RGB), junto con los archivos de metadatos generados. El sistema procesa cada zona de forma independiente.
+                        </p>
+
+                        <pre class="codigo-bloque"><code>data/
+                ├── Input/
+                │   ├── Exconvento/
+                │   │   ├── DJI_0011_ob3_j_t1.TIF
+                │   │   ├── DJI_0011_ob3_j_t1.JPG
+                │   │   ├── ...
+                │   │   ├── metadata_tif.csv
+                │   │   └── metadata_jpg.csv
+                │   ├── Jardin/
+                │   │   ├── DJI_0035_ot5_j_t1.TIF
+                │   │   ├── DJI_0035_ot5_j_t1.JPG
+                │   │   ├── ...
+                │   │   ├── metadata_tif.csv
+                │   │   └── metadata_jpg.csv
+                        </code></pre>
+
+                        <p>
+                            Si los archivos de metadatos no existen, el sistema invoca automáticamente <code>ExifTool</code> mediante el módulo <code>metadata_extractor.py</code> para generarlos. 
+                        </p>
+
+                        <h3 class="section-title">Ejecución del Preprocesamiento</h3>
+
+                        <p>
+                            Una vez configurada la estructura, el módulo se ejecuta desde la terminal con el siguiente comando:
+                        </p>
+
+                        <pre class="codigo-bloque"><code>python main_correccion_geometrica.py</code></pre>
+
+                        <p>
+                            Esto iniciará el procesamiento para todas las zonas disponibles en <code>data/Input</code>. Para cada zona:
+                        </p>
+
                         <ul>
-                            <li><em>Traslación inicial</em> mediante los desplazamientos de los centros ópticos, extraídos desde los metadatos.</li>
-                            <li><em>Refinamiento con SIFT</em> (Scale-Invariant Feature Transform), que calcula una homografía entre bandas utilizando puntos clave.</li>
+                            <li>Se validará o generará automáticamente la metadata.</li>
+                            <li>Se corregirá geométricamente cada imagen TIF y JPG.</li>
+                            <li>Se aplicará el coregistro espectral tomando la banda NIR como referencia.</li>
+                            <li>Se generará una imagen RGB naturalizada con apariencia fotográfica.</li>
                         </ul>
-                        El resultado es un conjunto de imágenes multibanda perfectamente alineadas, en las que cada píxel corresponde a la misma ubicación terrestre entre bandas.
-                    </li>
-                
-                    <li><strong>Generación de Imagen RGB con Apariencia Natural:</strong> Una vez las bandas han sido coregistradas, se genera una imagen RGB a partir de las bandas 3 (Red), 2 (Green) y 1 (Blue). Para mejorar su apariencia visual y facilitar tareas de segmentación o entrenamiento supervisado, se aplica una técnica de <em>transferencia de color</em> basada en el método de Reinhard, que ajusta la tonalidad del RGB multiespectral para imitar la apariencia del JPG original tomado por el dron.
-                    </li>
+
+                        <h3 class="section-title">Ejemplo de Resultados</h3>
+
+                        <p>La estructura final esperada tras la ejecución del módulo será:</p>
+
+                        <pre class="codigo-bloque"><code>data/
+                ├── Output/
+                │   ├── Exconvento/
+                │   │   ├── correccion_geometrica/
+                │   │   │   ├── DJI_0011_ob3_j_t1.TIF
+                │   │   │   ├── DJI_0011_ob3_j_t1.JPG
+                │   │   │   └── ...
+                │   │   └── coregistro/
+                │   │       ├── DJI_0011_ob3_j_t1.TIF     (multibanda coregistrado)
+                │   │       └── DJI_0011_ob3_j_t1.jpg     (RGB generada a partir del coregistro)
+                        </code></pre>
+
+                        <h3 class="section-title">Mensajes de Salida Esperados</h3>
+
+                        <p>
+                            Durante la ejecución, se mostrarán mensajes informativos como:
+                        </p>
+
+                        <ul>
+                            <li><code>Metadatos no encontrados en Jardin. Generando automáticamente con ExifTool...</code></li>
+                            <li><code>Corrección geométrica aplicada en DJI_0035_ot5_j_t1.TIF debido a Roll=0.24, Pitch=0.13, Yaw=-1.08</code></li>
+                            <li><code>Banda 2 coregistrada respecto a NIR.</code></li>
+                            <li><code>Imagen guardada: DJI_0035_ot5_j_t1.jpg</code></li>
+                        </ul>
+
+                        <h3 class="section-title">Consideraciones Finales</h3>
+
+                        <ul>
+                            <li>Este módulo garantiza la alineación precisa de todas las bandas espectrales y su correspondencia con la imagen RGB.</li>
+                            <li>Los datos procesados están listos para tareas de clasificación, segmentación o detección de muérdago con modelos basados en visión por computadora.</li>
+                            <li>El sistema fue diseñado con un enfoque modular y reproducible, pensado para escalar a múltiples zonas de estudio urbanas.</li>
+                        </ul>
+
+            </section>
+        </div>
+
+        
+
+        <!-- main_preprocesamiento.py-->
+        <div class="container container-custom mt-5">
+
+            <section class="card-proyecto p-4 mb-4">
+                <h3 class="subtitulo-proyecto mt-5">Descripción del Código Principal (<code>main_correccion_geometrica.py</code>)</h3>
+
+                <h3 class="section-title">Estructura del Código</h3>
+                <p>
+                    Este módulo orquesta todo el flujo de preprocesamiento geométrico y espectral para imágenes multiespectrales adquiridas con dron. Está diseñado específicamente para el proyecto de <strong>monitoreo de especies de muérdago</strong> en parques urbanos, permitiendo transformar datos crudos en imágenes corregidas, alineadas y listas para análisis espectral y clasificación. El código sigue una estructura en tres bloques principales:
+                </p>
+        
+                <ul>
+                    <li><strong>Importación y configuración:</strong> Define rutas, importa librerías y módulos auxiliares desde <code>scripts/</code>.</li>
+                    <li><strong>Funciones internas:</strong> Define las funciones <code>corregir_imagen()</code> y <code>procesar_zona()</code>, que encapsulan la lógica de procesamiento.</li>
+                    <li><strong>Bloque principal:</strong> Llama a <code>procesar_zona()</code> para cada subcarpeta dentro de <code>data/Input</code>, procesando cada zona de estudio por separado.</li>
+                </ul>
+        
+                <h3 class="section-title">Importación de Módulos</h3>
+                <p>
+                    El script importa bibliotecas estándar de Python (<code>os</code>, <code>pandas</code>, <code>cv2</code>, <code>rasterio</code>), así como funciones especializadas desde módulos auxiliares definidos en la carpeta <code>scripts/</code>:
+                </p>
+        
+                <ul>
+                    <li><code>utils.py</code>: Funciones de corrección geométrica (distorsión, homografía, recorte, guardado).</li>
+                    <li><code>coregistro.py</code>: Ejecuta el coregistro multibanda usando SIFT + homografía.</li>
+                    <li><code>generar_rgb.py</code>: Genera una imagen RGB desde las bandas espectrales.</li>
+                    <li><code>metadata_extractor.py</code>: Extrae automáticamente los metadatos si no existen.</li>
+                </ul>
+        
+                <p>
+                    También importa rutas y parámetros desde <code>config.py</code>, garantizando independencia del sistema de archivos.
+                </p>
+        
+                <h3 class="section-title">Función Principal: <code>procesar_zona()</code></h3>
+                <p>
+                    Esta función implementa el procesamiento completo de una zona de estudio. Ejecuta, en orden, los siguientes pasos:
+                </p>
+                <ol>
+                    <li><strong>Validación y generación de metadatos:</strong> Si los archivos <code>metadata_tif.csv</code> y <code>metadata_jpg.csv</code> no existen, los genera automáticamente usando <code>ExifTool</code>.</li>
+                    <li><strong>Corrección geométrica:</strong> Aplica corrección de distorsión y perspectiva a cada imagen TIF y JPG mediante <code>corregir_imagen()</code>.</li>
+                    <li><strong>Coregistro multibanda:</strong> Llama a <code>ejecutar_coregistro()</code> para alinear las bandas 1–4 respecto a la banda NIR (5).</li>
+                    <li><strong>Generación de imagen RGB:</strong> Aplica transferencia de color desde el JPG a la imagen RGB generada desde el TIF, usando <code>generar_rgb_transferido_batch()</code>.</li>
                 </ol>
-                
+        
                 <p>
-                El módulo ha sido diseñado con un enfoque <strong>modular, escalable y automatizado</strong>. Está preparado para procesar múltiples zonas en paralelo y es capaz de generar automáticamente los archivos de metadatos requeridos mediante <code>ExifTool</code> en caso de que no estén disponibles. La arquitectura del sistema permite una integración directa con flujos de análisis más amplios, como la clasificación supervisada con aprendizaje automático o la detección de objetos mediante visión por computadora.
+                    Al finalizar, se produce un conjunto completo de imágenes corregidas y listas para clasificación espectral o análisis espacial.
                 </p>
-            <br>
-            <br>
-
-
-            <!--Estructura del Módulo-->
-            <h2 class="h4 fw-bold">Estructura del Módulo</h2>
-            <p>
-                El <strong>Módulo de Corrección Geométrica y Coregistro</strong> está organizado de forma clara y modular para facilitar su mantenimiento, escalabilidad y reutilización dentro de flujos de análisis espectral. Cada componente cumple una función específica dentro del sistema de preprocesamiento, y su diseño promueve una separación lógica entre configuración, lógica de control y funciones especializadas.
-                </p>
-                
-                <p>
-                A continuación se presenta la estructura principal del sistema:
-                </p>
-                
-                <pre><code>1_correccion_geometrica/
-                │
-                ├── main_correccion_geometrica.py     # Script principal que ejecuta todo el flujo por zona (corrección, coregistro, RGB)
-                ├── config.py                         # Archivo de configuración de rutas base, entrada, salida y subcarpetas
-                ├── requirements.txt                  # Lista de dependencias para instalar el entorno de ejecución
-                │
-                ├── data/
-                │   ├── Input/                        # Carpeta que contiene subcarpetas por cada zona de estudio
-                │   └── Output/                       # Carpeta donde se guardan los resultados procesados por zona
-                │
-                └── scripts/
-                    ├── utils.py                     # Funciones auxiliares para corrección geométrica (distorsión, homografía, recorte)
-                    ├── coregistro.py                # Coregistro multiespectral usando centros ópticos + SIFT
-                    ├── generar_rgb.py              # Generación de imagen RGB con transferencia de color
-                    └── metadata_extractor.py       # Extracción automática de metadatos con ExifTool si no existen
+        
+                <h3 class="section-title">Flujo de Ejecución</h3>
+                <p>El flujo completo del script principal puede resumirse en los siguientes pasos:</p>
+        
+                <pre class="codigo-bloque"><code>
+        1. Buscar zonas de estudio dentro de /data/Input/
+        2. Para cada zona:
+            2.1 Verificar si existen metadatos .csv (si no, generarlos automáticamente con ExifTool)
+            2.2 Corregir geométricamente cada imagen .TIF y .JPG
+            2.3 Ejecutar el coregistro espectral usando la banda NIR como referencia
+            2.4 Generar una imagen RGB con apariencia fotográfica para tareas de visualización o segmentación
+        3. Guardar los resultados en /data/Output/[zona]/
                 </code></pre>
-                
+        
+                <h3 class="section-title">Ejecución del Script</h3>
                 <p>
-                Esta estructura modular permite lo siguiente:
+                    Para ejecutar el flujo de procesamiento completo, simplemente corre el siguiente comando desde la raíz del proyecto:
                 </p>
-                
-                <ul>
-                    <li><strong>main_correccion_geometrica.py</strong> actúa como punto de entrada, gestionando el flujo de procesamiento completo por zonas.</li>
-                    <li><strong>config.py</strong> centraliza las rutas del sistema, permitiendo su reutilización por todos los scripts sin modificar el código fuente.</li>
-                    <li>La carpeta <code>scripts/</code> contiene todos los módulos especializados, manteniendo el código organizado, limpio y reutilizable.</li>
-                    <li>La carpeta <code>data/Input/</code> puede contener múltiples zonas a procesar, cada una con su propio conjunto de imágenes y metadatos.</li>
-                    <li>Los resultados se almacenan automáticamente en <code>data/Output/[zona]</code>, en subcarpetas específicas para la etapa de corrección o coregistro.</li>
-                </ul>
-            <br>
-            <br>
-
-
-            <!--Organización de Datos de Entrada-->
-            <h2 class="h4 fw-bold">Organización de Datos de Entrada</h2>
-
-            <p>
-                El sistema está diseñado para procesar múltiples <strong>zonas de estudio</strong> de manera autónoma. Cada zona se organiza como una subcarpeta dentro de <code>data/Input/</code> y debe contener los archivos correspondientes a las imágenes capturadas por el dron, tanto en formato multiespectral (<code>.TIF</code>) como RGB (<code>.JPG</code>), además de los metadatos extraídos en formato <code>.csv</code>.
-                </p>
-                
+        
+                <pre class="codigo-bloque"><code>python main_correccion_geometrica.py</code></pre>
+        
                 <p>
-                El sistema identifica automáticamente estas zonas mediante el nombre de las subcarpetas y ejecuta todo el flujo de procesamiento secuencialmente: corrección geométrica, coregistro y generación de imágenes RGB.
+                    El sistema procesará automáticamente todas las zonas dentro de <code>data/Input/</code>, generando imágenes corregidas en <code>correccion_geometrica/</code> y productos alineados en <code>coregistro/</code>.
                 </p>
-                
-                <h6>Estructura esperada en la carpeta <code>Input/</code></h6>
-                
-                <pre><code>
-                data/
-                └── Input/
-                    ├── Exconvento/
-                    │   ├── DJI_0010_ob3_j_t1.TIF
-                    │   ├── DJI_0010_ob3_j_t1.JPG
-                    │   ├── DJI_0011_ob3_j_t1.TIF
-                    │   ├── DJI_0011_ob3_j_t1.JPG
-                    │   ├── ...
-                    │   ├── metadata_tif.csv
-                    │   └── metadata_jpg.csv
-                    │
-                    ├── Jardin/
-                    │   ├── DJI_0020_ot3_j_t2.TIF
-                    │   ├── DJI_0020_ot3_j_t2.JPG
-                    │   ├── ...
-                    │   ├── metadata_tif.csv
-                    │   └── metadata_jpg.csv
-                    │
-                    └── OtraZona/
-                        ├── ...
-                </code></pre>
-                
+        
                 <p>
-                Cada carpeta de zona debe contener:
+                    Se recomienda ejecutar este módulo como paso previo al análisis espectral o clasificación multibanda, asegurando que todas las imágenes estén alineadas geométricamente con precisión y listas para su análisis en profundidad.
                 </p>
-                
-                <ul>
-                    <li>Archivos <strong>.TIF</strong> multibanda: capturados por el sensor multiespectral del dron (bandas 1 a 5).</li>
-                    <li>Archivos <strong>.JPG</strong>: imágenes RGB tomadas de manera sincronizada para usar como referencia visual.</li>
-                    <li>Archivos <code>metadata_tif.csv</code> y <code>metadata_jpg.csv</code> que contienen los parámetros de calibración, distorsión, homografía, centros ópticos, etc.</li>
-                </ul>
-                
-                <p>
-                En caso de que los archivos de metadatos no estén presentes, el sistema <strong>los genera automáticamente</strong> mediante el módulo <code>metadata_extractor.py</code> usando <code>ExifTool</code>. Esta funcionalidad evita errores por omisión y garantiza que todas las zonas puedan ser procesadas sin intervención manual.
-                </p>
-                
-                <p>
-                Esta organización modular permite escalar el sistema a campañas con múltiples parques, fechas o sitios monitoreados, y facilita la integración en entornos de investigación urbana, seguimiento de especies parasíticas (como el muérdago) o monitoreo ambiental con UAV.
-                </p>
-            <br>
-            <br>
 
 
-            <!--Organización de Datos de Entrada-->
-            <h2 class="h4 fw-bold">Requerimientos de Software</h2>
-
-            <p>
-                Para ejecutar correctamente el <strong>Módulo de Corrección Geométrica y Coregistro</strong> se requiere contar con un entorno de Python configurado y con dependencias específicas instaladas. A continuación se detallan los requerimientos necesarios para la ejecución estable y reproducible del sistema.
-                </p>
-                
-                <ul>
-                    <li><strong>Python:</strong> Versión 3.8 o superior.</li>
-                    <li><strong>ExifTool:</strong> Herramienta externa utilizada para extraer metadatos embebidos en archivos <code>.TIF</code> y <code>.JPG</code>.</li>
-                    <li><strong>Bibliotecas de Python:</strong> Listadas en el archivo <code>requirements.txt</code>, deben instalarse ejecutando el siguiente comando desde la raíz del proyecto:</li>
-                </ul>
-                
-                <pre><code>pip install -r requirements.txt</code></pre>
-                
-                <h6 class="fw-bold">Contenido del archivo <code>requirements.txt</code>:</h6>
-                <pre><code>
-                numpy
-                pandas
-                rasterio
-                opencv-python
-                tifffile
-                Pillow
-                </code></pre>
-                
-                <h6 class="fw-bold">Instalación de ExifTool:</h6>
-                <p>ExifTool es un componente externo requerido para la generación automática de metadatos. Debe estar disponible en la consola del sistema:</p>
-                
-                <ul>
-                    <li><strong>Windows:</strong> Descargar desde <a href="https://exiftool.org/" target="_blank">https://exiftool.org/</a> y agregar la carpeta al <code>PATH</code>.</li>
-                    <li><strong>Linux (Debian/Ubuntu):</strong> <code>sudo apt install libimage-exiftool-perl</code></li>
-                    <li><strong>macOS:</strong> <code>brew install exiftool</code></li>
-                </ul>
-                
-                <p>
-                Durante la ejecución, el sistema validará automáticamente la disponibilidad de <code>exiftool</code> y mostrará un mensaje si no se encuentra instalado correctamente. Es necesario contar con este componente para generar los archivos <code>metadata_tif.csv</code> y <code>metadata_jpg.csv</code> si no existen en las carpetas de entrada.
-                </p>
-                
-                <p>
-                Se recomienda utilizar un entorno virtual para mantener separadas las dependencias del proyecto, evitar conflictos y facilitar la reproducción del flujo de trabajo.
-                </p>
-        </section>
-    </div>
-    
-
-    <!--Ejemplo de uso-->
-    <div class="container container-custom mt-5">
-        <section class="card shadow-sm p-4 mb-4">
-            <h4>Ejemplo de Uso</h4>
-                    <p>
-                        Esta sección describe cómo ejecutar el módulo de <strong>Corrección Geométrica y Coregistro</strong> para preprocesar imágenes multiespectrales capturadas por dron, como parte del sistema inteligente de monitoreo de muérdago en parques urbanos.
-                    </p>
-
-                    <h3 class="section-title">Archivo <code>config.py</code></h3>
-
-                    <p>
-                        El archivo <code>config.py</code> centraliza las rutas y parámetros globales del módulo. Las rutas se definen dinámicamente a partir de la ubicación del script principal, asegurando portabilidad y evitando la necesidad de modificar rutas absolutas.
-                    </p>
-
-                    <pre><code># config.py
-
-            import os
-
-            BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-            # Directorio donde se encuentran las carpetas por zona de estudio
-            INPUT_DIR = os.path.join(BASE_DIR, "data", "Input")
-
-            # Directorio de salida para las imágenes procesadas
-            OUTPUT_DIR = os.path.join(BASE_DIR, "data", "Output")
-
-            # Subcarpetas específicas para las etapas de procesamiento
-            SUBCARPETA_CORRECCION = "correccion_geometrica"
-            SUBCARPETA_COEGISTRO = "coregistro"
-
-            # Opción para borrar resultados previos
-            LIMPIAR_OUTPUT_ANTES_DE_PROCESAR = True
-
-            # Función auxiliar para listar zonas
-            def listar_zonas_disponibles():
-                return sorted([
-                    f for f in os.listdir(INPUT_DIR)
-                    if os.path.isdir(os.path.join(INPUT_DIR, f))
-                ])
-                    </code></pre>
-
-                    <h3 class="section-title">Organización de Archivos</h3>
-
-                    <p>
-                        Dentro del directorio definido como <code>INPUT_DIR</code>, cada subcarpeta representa una zona de estudio que contiene imágenes <code>.TIF</code> (multiespectrales) y opcionalmente <code>.JPG</code> (RGB), junto con los archivos de metadatos generados. El sistema procesa cada zona de forma independiente.
-                    </p>
-
-                    <pre><code>data/
-            ├── Input/
-            │   ├── Exconvento/
-            │   │   ├── DJI_0011_ob3_j_t1.TIF
-            │   │   ├── DJI_0011_ob3_j_t1.JPG
-            │   │   ├── ...
-            │   │   ├── metadata_tif.csv
-            │   │   └── metadata_jpg.csv
-            │   ├── Jardin/
-            │   │   ├── DJI_0035_ot5_j_t1.TIF
-            │   │   ├── DJI_0035_ot5_j_t1.JPG
-            │   │   ├── ...
-            │   │   ├── metadata_tif.csv
-            │   │   └── metadata_jpg.csv
-                    </code></pre>
-
-                    <p>
-                        Si los archivos de metadatos no existen, el sistema invoca automáticamente <code>ExifTool</code> mediante el módulo <code>metadata_extractor.py</code> para generarlos. 
-                    </p>
-
-                    <h3 class="section-title">Ejecución del Preprocesamiento</h3>
-
-                    <p>
-                        Una vez configurada la estructura, el módulo se ejecuta desde la terminal con el siguiente comando:
-                    </p>
-
-                    <pre><code>python main_correccion_geometrica.py</code></pre>
-
-                    <p>
-                        Esto iniciará el procesamiento para todas las zonas disponibles en <code>data/Input</code>. Para cada zona:
-                    </p>
-
-                    <ul>
-                        <li>Se validará o generará automáticamente la metadata.</li>
-                        <li>Se corregirá geométricamente cada imagen TIF y JPG.</li>
-                        <li>Se aplicará el coregistro espectral tomando la banda NIR como referencia.</li>
-                        <li>Se generará una imagen RGB naturalizada con apariencia fotográfica.</li>
-                    </ul>
-
-                    <h3 class="section-title">Ejemplo de Resultados</h3>
-
-                    <p>La estructura final esperada tras la ejecución del módulo será:</p>
-
-                    <pre><code>data/
-            ├── Output/
-            │   ├── Exconvento/
-            │   │   ├── correccion_geometrica/
-            │   │   │   ├── DJI_0011_ob3_j_t1.TIF
-            │   │   │   ├── DJI_0011_ob3_j_t1.JPG
-            │   │   │   └── ...
-            │   │   └── coregistro/
-            │   │       ├── DJI_0011_ob3_j_t1.TIF     (multibanda coregistrado)
-            │   │       └── DJI_0011_ob3_j_t1.jpg     (RGB generada a partir del coregistro)
-                    </code></pre>
-
-                    <h3 class="section-title">Mensajes de Salida Esperados</h3>
-
-                    <p>
-                        Durante la ejecución, se mostrarán mensajes informativos como:
-                    </p>
-
-                    <ul>
-                        <li><code>Metadatos no encontrados en Jardin. Generando automáticamente con ExifTool...</code></li>
-                        <li><code>Corrección geométrica aplicada en DJI_0035_ot5_j_t1.TIF debido a Roll=0.24, Pitch=0.13, Yaw=-1.08</code></li>
-                        <li><code>Banda 2 coregistrada respecto a NIR.</code></li>
-                        <li><code>Imagen guardada: DJI_0035_ot5_j_t1.jpg</code></li>
-                    </ul>
-
-                    <h3 class="section-title">Consideraciones Finales</h3>
-
-                    <ul>
-                        <li>Este módulo garantiza la alineación precisa de todas las bandas espectrales y su correspondencia con la imagen RGB.</li>
-                        <li>Los datos procesados están listos para tareas de clasificación, segmentación o detección de muérdago con modelos basados en visión por computadora.</li>
-                        <li>El sistema fue diseñado con un enfoque modular y reproducible, pensado para escalar a múltiples zonas de estudio urbanas.</li>
-                    </ul>
-
-        </section>
-    </div>
-
-    
-
-    <!-- main_preprocesamiento.py-->
-    <div class="container container-custom mt-5">
-
-        <section class="card shadow-sm p-4 mb-4">
-            <h2 class="h4 fw-bold">Descripción del Código Principal (<code>main_correccion_geometrica.py</code>)</h2>
-
-            <h3 class="section-title">Estructura del Código</h3>
-            <p>
-                Este módulo orquesta todo el flujo de preprocesamiento geométrico y espectral para imágenes multiespectrales adquiridas con dron. Está diseñado específicamente para el proyecto de <strong>monitoreo de especies de muérdago</strong> en parques urbanos, permitiendo transformar datos crudos en imágenes corregidas, alineadas y listas para análisis espectral y clasificación. El código sigue una estructura en tres bloques principales:
-            </p>
-    
-            <ul>
-                <li><strong>Importación y configuración:</strong> Define rutas, importa librerías y módulos auxiliares desde <code>scripts/</code>.</li>
-                <li><strong>Funciones internas:</strong> Define las funciones <code>corregir_imagen()</code> y <code>procesar_zona()</code>, que encapsulan la lógica de procesamiento.</li>
-                <li><strong>Bloque principal:</strong> Llama a <code>procesar_zona()</code> para cada subcarpeta dentro de <code>data/Input</code>, procesando cada zona de estudio por separado.</li>
-            </ul>
-    
-            <h3 class="section-title">Importación de Módulos</h3>
-            <p>
-                El script importa bibliotecas estándar de Python (<code>os</code>, <code>pandas</code>, <code>cv2</code>, <code>rasterio</code>), así como funciones especializadas desde módulos auxiliares definidos en la carpeta <code>scripts/</code>:
-            </p>
-    
-            <ul>
-                <li><code>utils.py</code>: Funciones de corrección geométrica (distorsión, homografía, recorte, guardado).</li>
-                <li><code>coregistro.py</code>: Ejecuta el coregistro multibanda usando SIFT + homografía.</li>
-                <li><code>generar_rgb.py</code>: Genera una imagen RGB desde las bandas espectrales.</li>
-                <li><code>metadata_extractor.py</code>: Extrae automáticamente los metadatos si no existen.</li>
-            </ul>
-    
-            <p>
-                También importa rutas y parámetros desde <code>config.py</code>, garantizando independencia del sistema de archivos.
-            </p>
-    
-            <h3 class="section-title">Función Principal: <code>procesar_zona()</code></h3>
-            <p>
-                Esta función implementa el procesamiento completo de una zona de estudio. Ejecuta, en orden, los siguientes pasos:
-            </p>
-            <ol>
-                <li><strong>Validación y generación de metadatos:</strong> Si los archivos <code>metadata_tif.csv</code> y <code>metadata_jpg.csv</code> no existen, los genera automáticamente usando <code>ExifTool</code>.</li>
-                <li><strong>Corrección geométrica:</strong> Aplica corrección de distorsión y perspectiva a cada imagen TIF y JPG mediante <code>corregir_imagen()</code>.</li>
-                <li><strong>Coregistro multibanda:</strong> Llama a <code>ejecutar_coregistro()</code> para alinear las bandas 1–4 respecto a la banda NIR (5).</li>
-                <li><strong>Generación de imagen RGB:</strong> Aplica transferencia de color desde el JPG a la imagen RGB generada desde el TIF, usando <code>generar_rgb_transferido_batch()</code>.</li>
-            </ol>
-    
-            <p>
-                Al finalizar, se produce un conjunto completo de imágenes corregidas y listas para clasificación espectral o análisis espacial.
-            </p>
-    
-            <h3 class="section-title">Flujo de Ejecución</h3>
-            <p>El flujo completo del script principal puede resumirse en los siguientes pasos:</p>
-    
-            <pre><code>
-    1. Buscar zonas de estudio dentro de /data/Input/
-    2. Para cada zona:
-        2.1 Verificar si existen metadatos .csv (si no, generarlos automáticamente con ExifTool)
-        2.2 Corregir geométricamente cada imagen .TIF y .JPG
-        2.3 Ejecutar el coregistro espectral usando la banda NIR como referencia
-        2.4 Generar una imagen RGB con apariencia fotográfica para tareas de visualización o segmentación
-    3. Guardar los resultados en /data/Output/[zona]/
-            </code></pre>
-    
-            <h3 class="section-title">Ejecución del Script</h3>
-            <p>
-                Para ejecutar el flujo de procesamiento completo, simplemente corre el siguiente comando desde la raíz del proyecto:
-            </p>
-    
-            <pre><code>python main_correccion_geometrica.py</code></pre>
-    
-            <p>
-                El sistema procesará automáticamente todas las zonas dentro de <code>data/Input/</code>, generando imágenes corregidas en <code>correccion_geometrica/</code> y productos alineados en <code>coregistro/</code>.
-            </p>
-    
-            <p>
-                Se recomienda ejecutar este módulo como paso previo al análisis espectral o clasificación multibanda, asegurando que todas las imágenes estén alineadas geométricamente con precisión y listas para su análisis en profundidad.
-            </p>
+            </section>
 
 
-        </section>
+            <!--Documentación del código-->
+            <section class="card-proyecto p-4 mb-4">
+                <h4 class="fw-bold">Documentación Scripts</h4>
+                <p>Selecciona el código que deseas explorar:</p>
 
-
-        <!--Documentación del código-->
-        <section class="card shadow-sm p-3 mb-3">
-            <h4 class="fw-bold">Documentación Scripts</h4>
-            <p>Selecciona el código que deseas explorar:</p>
-
-            <div class="accordion" id="accordionDocs">
-                
-                <!-- Utils -->
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingUtils">
-                        <button id="utilsButton" class="accordion-button collapsed blinking" type="button" data-bs-toggle="collapse" 
-                        data-bs-target="#collapseUtils" aria-expanded="false" aria-controls="collapseUtils">
-                        Funciones auxiliares para la Corrección Geométrica (utils.py)
-                        </button>
-                    </h2>
-                    <div id="collapseUtils" class="accordion-collapse collapse" aria-labelledby="headingUtils" data-bs-parent="#accordionDocs">
-                        <div class="accordion-body">
-                            <h5 class="fw-bold">Descripción General</h5>
-                            <p>
-                                Este módulo contiene funciones de soporte utilizadas por el script principal <code>main_correccion_geometrica.py</code> para aplicar correcciones geométricas a imágenes multiespectrales y RGB capturadas por drones. Las funciones están diseñadas con base en las especificaciones técnicas y recomendaciones del <strong>manual del fabricante DJI</strong> (P4 Multispectral), garantizando el uso adecuado de parámetros como la matriz de cámara, distorsión óptica y homografías calibradas.
-                            </p>
-                            <p>
-                                El objetivo de estas funciones es eliminar las deformaciones ópticas sistemáticas y normalizar el campo de visión de cada imagen, asegurando coherencia espacial antes del coregistro o análisis espectral.
-                            </p>
-                
-                            <h5 class="fw-bold">Principales Funciones</h5>
-                
-                            <ul>
-                                <li>
-                                    <code>extract_camera_params()</code>: 
-                                    Extrae la matriz de cámara, los coeficientes de distorsión y la homografía de calibración desde los metadatos de cada imagen.
-                                    Diferencia entre imágenes <code>.TIF</code> y <code>.JPG</code>, extrayendo datos de los campos <strong>Perspective Distortion</strong> y <strong>Dewarp Data</strong>.
-                                </li>
-                                <li>
-                                    <code>correct_lens_distortion()</code>: 
-                                    Corrige la distorsión radial y tangencial inducida por la óptica de la cámara, aplicando <code>cv2.undistort()</code> con la matriz de calibración.
-                                    Este paso es esencial antes de cualquier alineación geométrica.
-                                </li>
-                                <li>
-                                    <code>crop_center()</code>: 
-                                    Recorta un ROI centrado (1500x1150 px) en cada imagen para conservar una región estable y libre de bordes distorsionados, definida como el área común válida después de la corrección de lente.
-                                </li>
-                                <li>
-                                    <code>save_corrected_image()</code>: 
-                                    Guarda las imágenes corregidas asegurando el tipo y formato adecuado: <code>uint16</code> multibanda para TIF y <code>uint8</code> comprimido para JPG. Usa Rasterio para las TIF, manteniendo su perfil georreferenciado.
-                                </li>
-                                <li>
-                                    <code>save_processed_image()</code>: 
-                                    Registra las imágenes ya corregidas en un archivo de texto (<code>progreso.txt</code>) para evitar reprocesamientos en ejecuciones repetidas del módulo.
-                                </li>
-                            </ul>
-                
-                            <h5 class="fw-bold">Decisiones de Diseño</h5>
-                            <ul>
-                                <li>
-                                    Se definió un <strong>tamaño estándar de recorte</strong> (1500x1150 px) basado en el ROI común mínimo tras aplicar corrección de lente en toda la base de datos. Esto garantiza uniformidad entre imágenes.
-                                </li>
-                                <li>
-                                    La corrección de distorsión y extracción de parámetros está separada de la lógica de flujo principal para facilitar pruebas y mantenimiento.
-                                </li>
-                                <li>
-                                    Se sigue la convención del fabricante DJI para lectura de campos <code>Dewarp Data</code> (JPG) y <code>Perspective Distortion</code> (TIF), que tienen estructuras diferentes y requieren procesamiento específico.
-                                </li>
-                            </ul>
-                
-                            <h5 class="fw-bold">Recomendaciones</h5>
-                            <ul>
-                                <li>
-                                    Estas funciones deben ejecutarse antes del <strong>coregistro espectral</strong> o cualquier análisis de contenido visual.
-                                </li>
-                                <li>
-                                    No aplicar la homografía directamente si el <code>roll</code>, <code>pitch</code> y <code>yaw</code> son cercanos a cero, ya que puede introducir distorsiones innecesarias.
-                                </li>
-                                <li>
-                                    El uso de <code>progreso.txt</code> permite ejecutar el módulo de forma segura incluso si se interrumpe su ejecución, evitando reprocesamiento.
-                                </li>
-                            </ul>
-                
-                            <h5 class="fw-bold">Dependencias</h5>
-                            <ul>
-                                <li><code>OpenCV (cv2)</code>: Para corrección de distorsión y guardado de imágenes.</li>
-                                <li><code>Numpy</code>: Para manipulación matricial.</li>
-                                <li><code>Pandas</code>: Para leer y acceder a los metadatos.</li>
-                                <li><code>Rasterio</code>: Para guardar imágenes multibanda con estructura georreferenciada.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- Coregistro -->
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingRedun">
-                        <button id="coregButton" class="accordion-button collapsed blinking" type="button" data-bs-toggle="collapse" 
-                        data-bs-target="#collapseCoreg" aria-expanded="false" aria-controls="collapseCoreg">
-                        Coregistro de Bandas Multiespectrales (coregistro.py)
-                        </button>
-                    </h2>
-                    <div id="collapseCoreg" class="accordion-collapse collapse" aria-labelledby="headingCoreg" data-bs-parent="#accordionDocs">
-                        <div class="accordion-body">
-                            <h5 class="fw-bold">Descripción General</h5>
-                            <p>
-                                El módulo <code>coregistro.py</code> implementa el proceso de alineación geométrica multibanda de imágenes multiespectrales capturadas por sensores UAV, asegurando que todas las bandas espectrales compartan una misma geometría espacial. Este paso es indispensable para el análisis espectral conjunto, el cálculo de índices y la clasificación multicanal en estudios de detección de muérdago.
-                            </p>
-                            <p>
-                                La estrategia de coregistro combina dos enfoques complementarios:
-                            </p>
-                            <ol>
-                                <li>
-                                    <strong>Traslación afín basada en centros ópticos:</strong> Se extraen desde los metadatos los desplazamientos relativos (X, Y) del centro óptico de cada lente con respecto a la banda NIR. Este paso inicial aproxima la alineación y permite trabajar incluso en zonas sin puntos visuales definidos.
-                                </li>
-                                <li>
-                                    <strong>Homografía refinada con SIFT:</strong> Se detectan puntos clave entre la banda NIR y la banda en proceso mediante el algoritmo SIFT (Scale-Invariant Feature Transform). Si se encuentran suficientes coincidencias, se estima una homografía para afinar el coregistro.
-                                </li>
-                            </ol>
-                
-                            <h5 class="fw-bold">Funciones Principales</h5>
-                            <ul>
-                                <li><code>parse_nombre_archivo()</code>: Extrae la estructura lógica del nombre base de cada imagen, permitiendo agrupar por adquisición sin ambigüedad.</li>
-                                <li><code>obtener_centros_opticos()</code>: Extrae los valores de desplazamiento del centro óptico desde los metadatos DJI, campo clave para la etapa de alineación inicial.</li>
-                                <li><code>cargar_grupos_imagenes()</code>: Agrupa por nombre base todas las bandas multiespectrales y su correspondiente imagen RGB.</li>
-                                <li><code>coregistrar_banda()</code>: Aplica traslación afín seguida opcionalmente de homografía con SIFT para alinear una banda con respecto a la NIR.</li>
-                                <li><code>procesar_grupos()</code>: Itera por grupo, coregistra cada banda y genera una imagen multibanda coregistrada.</li>
-                                <li><code>ejecutar_coregistro()</code>: Punto de entrada al módulo, invocado desde el script principal.</li>
-                            </ul>
-                
-                            <h5 class="fw-bold">Criterios de Diseño</h5>
-                            <ul>
-                                <li>Se utiliza la banda NIR (banda 5) como referencia porque presenta mayor contraste espectral y mayor estabilidad geométrica.</li>
-                                <li>La homografía solo se aplica si se detectan más de 10 puntos clave válidos, evitando deformaciones indebidas.</li>
-                                <li>Las imágenes son procesadas banda por banda, preservando su resolución radiométrica original (`uint16`) sin alteraciones ni interpolaciones espectrales.</li>
-                                <li>Se verifica que todas las bandas tengan el mismo tamaño antes de guardar la imagen multibanda final.</li>
-                            </ul>
-
-                            <h5 class="fw-bold">Métricas de Evaluación</h5>
-                            <p>
-                                El proceso imprime en consola la <strong>Correlación Cruzada Normalizada (NCC)</strong> entre la banda NIR y cada banda alineada. Un valor cercano a 1 indica alineación satisfactoria. Este valor puede utilizarse para evaluar automáticamente la calidad del coregistro.
-                            </p>
-                
-                            <h5 class="fw-bold">Recomendaciones</h5>
-                            <ul>
-                                <li>Este módulo debe ejecutarse después de la <strong>corrección geométrica individual</strong> de las imágenes.</li>
-                                <li>Los metadatos deben estar disponibles en los archivos <code>metadata_tif.csv</code> y <code>metadata_jpg.csv</code>.</li>
-                                <li>El archivo <code>progreso_coregistro.txt</code> evita reprocesamiento redundante y permite continuar procesos interrumpidos.</li>
-                            </ul>
-                
-                            <h5 class="fw-bold">Dependencias</h5>
-                            <ul>
-                                <li><code>cv2</code>: Para transformaciones geométricas, detección de keypoints y cálculo de homografías.</li>
-                                <li><code>numpy</code>: Operaciones matriciales.</li>
-                                <li><code>pandas</code>: Acceso a metadatos.</li>
-                                <li><code>rasterio</code>: Escritura de imágenes multibanda TIF.</li>
-                                <li><code>re</code>: Procesamiento de nombres de archivo.</li>
-                            </ul>
-                        </div>
-                    </div>                    
-                </div>
-
-
-                <!-- Generar RGB -->
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingRgb">
-                        <button id="rgbButton" class="accordion-button collapsed blinking" type="button" data-bs-toggle="collapse" 
-                        data-bs-target="#collapseRGB" aria-expanded="false" aria-controls="collapseRGB">
-                        Generar Imágenes RGB (generar_rgb.py)
-                        </button>
-                    </h2>
-                    <div id="collapseRGB" class="accordion-collapse collapse" aria-labelledby="headingRGB" data-bs-parent="#accordionDocs">
-                        <div class="accordion-body">
-                            <h5 class="fw-bold">Descripción General</h5>
-                            <p>
-                                El módulo <code>generar_rgb.py</code> produce imágenes RGB naturalizadas a partir de cubos multibanda TIF previamente coregistrados. El objetivo es ofrecer una representación visual coherente con la percepción humana del color, facilitando la inspección visual, la generación de máscaras de segmentación y el entrenamiento de modelos que esperan entradas RGB naturales.
-                            </p>
-                            <p>
-                                Las bandas 3-2-1 (Rojo, Verde, Azul) extraídas del TIF se transforman mediante un proceso de transferencia de color basado en <strong>Reinhard et al. (2001)</strong>, que ajusta las características cromáticas de la imagen multiespectral al estilo visual del JPG original, corregido geométricamente.
-                            </p>
-                
-                            <h5 class="fw-bold">Funciones Principales</h5>
-                            <ul>
-                                <li><code>extraer_rgb_desde_tif()</code>: Extrae las bandas 3 (R), 2 (G) y 1 (B) desde el archivo TIF multibanda y las reorganiza para su procesamiento.</li>
-                                <li><code>normalizar_rgb_conjuntamente()</code>: Aplica una normalización global a los tres canales, escalando al rango [0, 255] para preservar las proporciones entre bandas.</li>
-                                <li><code>transfer_color_reinhard()</code>: Adapta los valores de color del RGB-TIF al estilo fotográfico del JPG, igualando estadísticas en el espacio de color LAB.</li>
-                                <li><code>generar_rgb_transferido_batch()</code>: Recorre por lotes los TIF coregistrados y genera las imágenes RGB naturalizadas correspondientes.</li>
-                            </ul>
-                
-                            <h5 class="fw-bold">Criterios de Diseño</h5>
-                            <ul>
-                                <li>Se conserva la integridad radiométrica original hasta la etapa final, donde la imagen se convierte a <code>uint8</code> para visualización y compatibilidad con modelos.</li>
-                                <li>La transferencia de color se realiza solo tras verificar la correspondencia geométrica entre el TIF y el JPG, redimensionando si es necesario.</li>
-                                <li>El enfoque de Reinhard es ideal para corregir tonalidades sin alterar detalles espaciales, por lo que es altamente efectivo en áreas arboladas.</li>
-                                <li>El resultado final se guarda como archivo <code>.jpg</code> con sufijo <code>_rgb_transferido</code>.</li>
-                            </ul>
-                
-                            <h5 class="fw-bold">Recomendaciones</h5>
-                            <ul>
-                                <li>Ejecutar este módulo únicamente después del <strong>coregistro multiespectral</strong> para asegurar el alineamiento entre bandas.</li>
-                                <li>Verificar que los archivos JPG de referencia hayan sido previamente corregidos geométricamente.</li>
-                                <li>Se recomienda revisar visualmente las imágenes generadas en caso de discrepancias cromáticas fuertes (por ejemplo, sobreexposición o imágenes nocturnas).</li>
-                            </ul>
-                
-                            <h5 class="fw-bold">Dependencias</h5>
-                            <ul>
-                                <li><code>opencv-python</code>: Para manejo de colores y conversión de espacios RGB ↔ LAB.</li>
-                                <li><code>numpy</code>: Procesamiento matricial.</li>
-                                <li><code>rasterio</code>: Lectura de imágenes TIF multibanda.</li>
-                                <li><code>Pillow</code>: Guardado final de la imagen RGB transferida en formato JPEG.</li>
-                            </ul>
-                
-                            <h5 class="fw-bold">Referencia</h5>
-                            <p>
-                                Reinhard, E., Adhikhmin, M., Gooch, B., & Shirley, P. (2001). Color Transfer between Images. <em>IEEE Computer Graphics and Applications</em>, 21(5), 34–41.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Metadatos-->
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingGeo">
-                        <button id="geoButton" class="accordion-button collapsed blinking" type="button" data-bs-toggle="collapse" 
-                        data-bs-target="#collapseGeo" aria-expanded="false" aria-controls="collapseGeo">
-                        Extracción de metadatos (metadata_extractor.py)
-                        </button>
-                    </h2>
-                    <div id="collapseGeo" class="accordion-collapse collapse" aria-labelledby="headingGeo" data-bs-parent="#accordionDocs">
-                        <div class="accordion-body">
-                            <h5 class="fw-bold">Descripción General</h5>
-                            <p>
-                                Este script se encarga de extraer automáticamente los metadatos embebidos en las imágenes <code>.TIF</code> y <code>.JPG</code> utilizando la herramienta <code>ExifTool</code>. 
-                            </p>
-                
-                            <p>
-                                Los metadatos se guardan en dos archivos CSV separados dentro de cada carpeta de zona:
+                <div class="accordion" id="accordionDocs">
+                    
+                    <!-- Utils -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingUtils">
+                            <button id="utilsButton" class="accordion-button collapsed blinking" type="button" data-bs-toggle="collapse" 
+                            data-bs-target="#collapseUtils" aria-expanded="false" aria-controls="collapseUtils">
+                            Funciones auxiliares para la Corrección Geométrica (utils.py)
+                            </button>
+                        </h2>
+                        <div id="collapseUtils" class="accordion-collapse collapse" aria-labelledby="headingUtils" data-bs-parent="#accordionDocs">
+                            <div class="accordion-body">
+                                <h5 class="fw-bold">Descripción General</h5>
+                                <p>
+                                    Este módulo contiene funciones de soporte utilizadas por el script principal <code>main_correccion_geometrica.py</code> para aplicar correcciones geométricas a imágenes multiespectrales y RGB capturadas por drones. Las funciones están diseñadas con base en las especificaciones técnicas y recomendaciones del <strong>manual del fabricante DJI</strong> (P4 Multispectral), garantizando el uso adecuado de parámetros como la matriz de cámara, distorsión óptica y homografías calibradas.
+                                </p>
+                                <p>
+                                    El objetivo de estas funciones es eliminar las deformaciones ópticas sistemáticas y normalizar el campo de visión de cada imagen, asegurando coherencia espacial antes del coregistro o análisis espectral.
+                                </p>
+                    
+                                <h5 class="fw-bold">Principales Funciones</h5>
+                    
                                 <ul>
-                                    <li><code>metadata_tif.csv</code>: contiene los metadatos de las imágenes multiespectrales .TIF.</li>
-                                    <li><code>metadata_jpg.csv</code>: contiene los metadatos de las imágenes RGB .JPG.</li>
+                                    <li>
+                                        <code>extract_camera_params()</code>: 
+                                        Extrae la matriz de cámara, los coeficientes de distorsión y la homografía de calibración desde los metadatos de cada imagen.
+                                        Diferencia entre imágenes <code>.TIF</code> y <code>.JPG</code>, extrayendo datos de los campos <strong>Perspective Distortion</strong> y <strong>Dewarp Data</strong>.
+                                    </li>
+                                    <li>
+                                        <code>correct_lens_distortion()</code>: 
+                                        Corrige la distorsión radial y tangencial inducida por la óptica de la cámara, aplicando <code>cv2.undistort()</code> con la matriz de calibración.
+                                        Este paso es esencial antes de cualquier alineación geométrica.
+                                    </li>
+                                    <li>
+                                        <code>crop_center()</code>: 
+                                        Recorta un ROI centrado (1500x1150 px) en cada imagen para conservar una región estable y libre de bordes distorsionados, definida como el área común válida después de la corrección de lente.
+                                    </li>
+                                    <li>
+                                        <code>save_corrected_image()</code>: 
+                                        Guarda las imágenes corregidas asegurando el tipo y formato adecuado: <code>uint16</code> multibanda para TIF y <code>uint8</code> comprimido para JPG. Usa Rasterio para las TIF, manteniendo su perfil georreferenciado.
+                                    </li>
+                                    <li>
+                                        <code>save_processed_image()</code>: 
+                                        Registra las imágenes ya corregidas en un archivo de texto (<code>progreso.txt</code>) para evitar reprocesamientos en ejecuciones repetidas del módulo.
+                                    </li>
                                 </ul>
-                            </p>
-                
-                            <h5 class="fw-bold">Función Principal</h5>
-                            <p>
-                                Esta función recibe como entrada la ruta a una carpeta de imágenes y genera automáticamente los dos archivos CSV de metadatos. Internamente ejecuta los siguientes pasos:
-                            </p>
-                            <ol>
-                                <li>Verifica si la carpeta existe y contiene imágenes válidas.</li>
-                                <li>Busca y clasifica archivos <code>.TIF</code> y <code>.JPG</code>.</li>
-                                <li>Ejecuta <code>exiftool</code> sobre cada imagen y parsea la salida.</li>
-                                <li>Extrae los metadatos clave, agregando el nombre del archivo y su extensión.</li>
-                                <li>Guarda los resultados en <code>metadata_tif.csv</code> y <code>metadata_jpg.csv</code>.</li>
-                            </ol>
-                
-                            <h5 class="fw-bold">Dependencias</h5>
-                            <ul>
-                                <li><code>os</code>: para gestión de rutas y archivos.</li>
-                                <li><code>csv</code>: para guardar resultados en formato estructurado.</li>
-                                <li><code>subprocess</code>: para ejecutar <code>ExifTool</code> desde Python.</li>
-                            </ul>
-                
-                            <h5 class="fw-bold">Uso independiente</h5>
-                            <p>
-                                Aunque se integra automáticamente desde <code>main_correccion_geometrica.py</code>, también puede ejecutarse manualmente desde otro script para generar los archivos de metadatos en cualquier carpeta que contenga imágenes.
-                            </p>
-                
-                            <h5 class="fw-bold">Notas adicionales</h5>
-                            <ul>
-                                <li>El script ignora archivos corruptos o imágenes que no puedan ser leídas por <code>ExifTool</code>.</li>
-                                <li>Se asegura compatibilidad con nombres de campos variables en los metadatos.</li>
-                                <li>La salida CSV está codificada en <code>UTF-8</code>.</li>
-                            </ul>
+                    
+                                <h5 class="fw-bold">Decisiones de Diseño</h5>
+                                <ul>
+                                    <li>
+                                        Se definió un <strong>tamaño estándar de recorte</strong> (1500x1150 px) basado en el ROI común mínimo tras aplicar corrección de lente en toda la base de datos. Esto garantiza uniformidad entre imágenes.
+                                    </li>
+                                    <li>
+                                        La corrección de distorsión y extracción de parámetros está separada de la lógica de flujo principal para facilitar pruebas y mantenimiento.
+                                    </li>
+                                    <li>
+                                        Se sigue la convención del fabricante DJI para lectura de campos <code>Dewarp Data</code> (JPG) y <code>Perspective Distortion</code> (TIF), que tienen estructuras diferentes y requieren procesamiento específico.
+                                    </li>
+                                </ul>
+                    
+                                <h5 class="fw-bold">Recomendaciones</h5>
+                                <ul>
+                                    <li>
+                                        Estas funciones deben ejecutarse antes del <strong>coregistro espectral</strong> o cualquier análisis de contenido visual.
+                                    </li>
+                                    <li>
+                                        No aplicar la homografía directamente si el <code>roll</code>, <code>pitch</code> y <code>yaw</code> son cercanos a cero, ya que puede introducir distorsiones innecesarias.
+                                    </li>
+                                    <li>
+                                        El uso de <code>progreso.txt</code> permite ejecutar el módulo de forma segura incluso si se interrumpe su ejecución, evitando reprocesamiento.
+                                    </li>
+                                </ul>
+                    
+                                <h5 class="fw-bold">Dependencias</h5>
+                                <ul>
+                                    <li><code>OpenCV (cv2)</code>: Para corrección de distorsión y guardado de imágenes.</li>
+                                    <li><code>Numpy</code>: Para manipulación matricial.</li>
+                                    <li><code>Pandas</code>: Para leer y acceder a los metadatos.</li>
+                                    <li><code>Rasterio</code>: Para guardar imágenes multibanda con estructura georreferenciada.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Coregistro -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingRedun">
+                            <button id="coregButton" class="accordion-button collapsed blinking" type="button" data-bs-toggle="collapse" 
+                            data-bs-target="#collapseCoreg" aria-expanded="false" aria-controls="collapseCoreg">
+                            Coregistro de Bandas Multiespectrales (coregistro.py)
+                            </button>
+                        </h2>
+                        <div id="collapseCoreg" class="accordion-collapse collapse" aria-labelledby="headingCoreg" data-bs-parent="#accordionDocs">
+                            <div class="accordion-body">
+                                <h5 class="fw-bold">Descripción General</h5>
+                                <p>
+                                    El módulo <code>coregistro.py</code> implementa el proceso de alineación geométrica multibanda de imágenes multiespectrales capturadas por sensores UAV, asegurando que todas las bandas espectrales compartan una misma geometría espacial. Este paso es indispensable para el análisis espectral conjunto, el cálculo de índices y la clasificación multicanal en estudios de detección de muérdago.
+                                </p>
+                                <p>
+                                    La estrategia de coregistro combina dos enfoques complementarios:
+                                </p>
+                                <ol>
+                                    <li>
+                                        <strong>Traslación afín basada en centros ópticos:</strong> Se extraen desde los metadatos los desplazamientos relativos (X, Y) del centro óptico de cada lente con respecto a la banda NIR. Este paso inicial aproxima la alineación y permite trabajar incluso en zonas sin puntos visuales definidos.
+                                    </li>
+                                    <li>
+                                        <strong>Homografía refinada con SIFT:</strong> Se detectan puntos clave entre la banda NIR y la banda en proceso mediante el algoritmo SIFT (Scale-Invariant Feature Transform). Si se encuentran suficientes coincidencias, se estima una homografía para afinar el coregistro.
+                                    </li>
+                                </ol>
+                    
+                                <h5 class="fw-bold">Funciones Principales</h5>
+                                <ul>
+                                    <li><code>parse_nombre_archivo()</code>: Extrae la estructura lógica del nombre base de cada imagen, permitiendo agrupar por adquisición sin ambigüedad.</li>
+                                    <li><code>obtener_centros_opticos()</code>: Extrae los valores de desplazamiento del centro óptico desde los metadatos DJI, campo clave para la etapa de alineación inicial.</li>
+                                    <li><code>cargar_grupos_imagenes()</code>: Agrupa por nombre base todas las bandas multiespectrales y su correspondiente imagen RGB.</li>
+                                    <li><code>coregistrar_banda()</code>: Aplica traslación afín seguida opcionalmente de homografía con SIFT para alinear una banda con respecto a la NIR.</li>
+                                    <li><code>procesar_grupos()</code>: Itera por grupo, coregistra cada banda y genera una imagen multibanda coregistrada.</li>
+                                    <li><code>ejecutar_coregistro()</code>: Punto de entrada al módulo, invocado desde el script principal.</li>
+                                </ul>
+                    
+                                <h5 class="fw-bold">Criterios de Diseño</h5>
+                                <ul>
+                                    <li>Se utiliza la banda NIR (banda 5) como referencia porque presenta mayor contraste espectral y mayor estabilidad geométrica.</li>
+                                    <li>La homografía solo se aplica si se detectan más de 10 puntos clave válidos, evitando deformaciones indebidas.</li>
+                                    <li>Las imágenes son procesadas banda por banda, preservando su resolución radiométrica original (`uint16`) sin alteraciones ni interpolaciones espectrales.</li>
+                                    <li>Se verifica que todas las bandas tengan el mismo tamaño antes de guardar la imagen multibanda final.</li>
+                                </ul>
+
+                                <h5 class="fw-bold">Métricas de Evaluación</h5>
+                                <p>
+                                    El proceso imprime en consola la <strong>Correlación Cruzada Normalizada (NCC)</strong> entre la banda NIR y cada banda alineada. Un valor cercano a 1 indica alineación satisfactoria. Este valor puede utilizarse para evaluar automáticamente la calidad del coregistro.
+                                </p>
+                    
+                                <h5 class="fw-bold">Recomendaciones</h5>
+                                <ul>
+                                    <li>Este módulo debe ejecutarse después de la <strong>corrección geométrica individual</strong> de las imágenes.</li>
+                                    <li>Los metadatos deben estar disponibles en los archivos <code>metadata_tif.csv</code> y <code>metadata_jpg.csv</code>.</li>
+                                    <li>El archivo <code>progreso_coregistro.txt</code> evita reprocesamiento redundante y permite continuar procesos interrumpidos.</li>
+                                </ul>
+                    
+                                <h5 class="fw-bold">Dependencias</h5>
+                                <ul>
+                                    <li><code>cv2</code>: Para transformaciones geométricas, detección de keypoints y cálculo de homografías.</li>
+                                    <li><code>numpy</code>: Operaciones matriciales.</li>
+                                    <li><code>pandas</code>: Acceso a metadatos.</li>
+                                    <li><code>rasterio</code>: Escritura de imágenes multibanda TIF.</li>
+                                    <li><code>re</code>: Procesamiento de nombres de archivo.</li>
+                                </ul>
+                            </div>
+                        </div>                    
+                    </div>
+
+
+                    <!-- Generar RGB -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingRgb">
+                            <button id="rgbButton" class="accordion-button collapsed blinking" type="button" data-bs-toggle="collapse" 
+                            data-bs-target="#collapseRGB" aria-expanded="false" aria-controls="collapseRGB">
+                            Generar Imágenes RGB (generar_rgb.py)
+                            </button>
+                        </h2>
+                        <div id="collapseRGB" class="accordion-collapse collapse" aria-labelledby="headingRGB" data-bs-parent="#accordionDocs">
+                            <div class="accordion-body">
+                                <h5 class="fw-bold">Descripción General</h5>
+                                <p>
+                                    El módulo <code>generar_rgb.py</code> produce imágenes RGB naturalizadas a partir de cubos multibanda TIF previamente coregistrados. El objetivo es ofrecer una representación visual coherente con la percepción humana del color, facilitando la inspección visual, la generación de máscaras de segmentación y el entrenamiento de modelos que esperan entradas RGB naturales.
+                                </p>
+                                <p>
+                                    Las bandas 3-2-1 (Rojo, Verde, Azul) extraídas del TIF se transforman mediante un proceso de transferencia de color basado en <strong>Reinhard et al. (2001)</strong>, que ajusta las características cromáticas de la imagen multiespectral al estilo visual del JPG original, corregido geométricamente.
+                                </p>
+                    
+                                <h5 class="fw-bold">Funciones Principales</h5>
+                                <ul>
+                                    <li><code>extraer_rgb_desde_tif()</code>: Extrae las bandas 3 (R), 2 (G) y 1 (B) desde el archivo TIF multibanda y las reorganiza para su procesamiento.</li>
+                                    <li><code>normalizar_rgb_conjuntamente()</code>: Aplica una normalización global a los tres canales, escalando al rango [0, 255] para preservar las proporciones entre bandas.</li>
+                                    <li><code>transfer_color_reinhard()</code>: Adapta los valores de color del RGB-TIF al estilo fotográfico del JPG, igualando estadísticas en el espacio de color LAB.</li>
+                                    <li><code>generar_rgb_transferido_batch()</code>: Recorre por lotes los TIF coregistrados y genera las imágenes RGB naturalizadas correspondientes.</li>
+                                </ul>
+                    
+                                <h5 class="fw-bold">Criterios de Diseño</h5>
+                                <ul>
+                                    <li>Se conserva la integridad radiométrica original hasta la etapa final, donde la imagen se convierte a <code>uint8</code> para visualización y compatibilidad con modelos.</li>
+                                    <li>La transferencia de color se realiza solo tras verificar la correspondencia geométrica entre el TIF y el JPG, redimensionando si es necesario.</li>
+                                    <li>El enfoque de Reinhard es ideal para corregir tonalidades sin alterar detalles espaciales, por lo que es altamente efectivo en áreas arboladas.</li>
+                                    <li>El resultado final se guarda como archivo <code>.jpg</code> con sufijo <code>_rgb_transferido</code>.</li>
+                                </ul>
+                    
+                                <h5 class="fw-bold">Recomendaciones</h5>
+                                <ul>
+                                    <li>Ejecutar este módulo únicamente después del <strong>coregistro multiespectral</strong> para asegurar el alineamiento entre bandas.</li>
+                                    <li>Verificar que los archivos JPG de referencia hayan sido previamente corregidos geométricamente.</li>
+                                    <li>Se recomienda revisar visualmente las imágenes generadas en caso de discrepancias cromáticas fuertes (por ejemplo, sobreexposición o imágenes nocturnas).</li>
+                                </ul>
+                    
+                                <h5 class="fw-bold">Dependencias</h5>
+                                <ul>
+                                    <li><code>opencv-python</code>: Para manejo de colores y conversión de espacios RGB ↔ LAB.</li>
+                                    <li><code>numpy</code>: Procesamiento matricial.</li>
+                                    <li><code>rasterio</code>: Lectura de imágenes TIF multibanda.</li>
+                                    <li><code>Pillow</code>: Guardado final de la imagen RGB transferida en formato JPEG.</li>
+                                </ul>
+                    
+                                <h5 class="fw-bold">Referencia</h5>
+                                <p>
+                                    Reinhard, E., Adhikhmin, M., Gooch, B., & Shirley, P. (2001). Color Transfer between Images. <em>IEEE Computer Graphics and Applications</em>, 21(5), 34–41.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Metadatos-->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingGeo">
+                            <button id="geoButton" class="accordion-button collapsed blinking" type="button" data-bs-toggle="collapse" 
+                            data-bs-target="#collapseGeo" aria-expanded="false" aria-controls="collapseGeo">
+                            Extracción de metadatos (metadata_extractor.py)
+                            </button>
+                        </h2>
+                        <div id="collapseGeo" class="accordion-collapse collapse" aria-labelledby="headingGeo" data-bs-parent="#accordionDocs">
+                            <div class="accordion-body">
+                                <h5 class="fw-bold">Descripción General</h5>
+                                <p>
+                                    Este script se encarga de extraer automáticamente los metadatos embebidos en las imágenes <code>.TIF</code> y <code>.JPG</code> utilizando la herramienta <code>ExifTool</code>. 
+                                </p>
+                    
+                                <p>
+                                    Los metadatos se guardan en dos archivos CSV separados dentro de cada carpeta de zona:
+                                    <ul>
+                                        <li><code>metadata_tif.csv</code>: contiene los metadatos de las imágenes multiespectrales .TIF.</li>
+                                        <li><code>metadata_jpg.csv</code>: contiene los metadatos de las imágenes RGB .JPG.</li>
+                                    </ul>
+                                </p>
+                    
+                                <h5 class="fw-bold">Función Principal</h5>
+                                <p>
+                                    Esta función recibe como entrada la ruta a una carpeta de imágenes y genera automáticamente los dos archivos CSV de metadatos. Internamente ejecuta los siguientes pasos:
+                                </p>
+                                <ol>
+                                    <li>Verifica si la carpeta existe y contiene imágenes válidas.</li>
+                                    <li>Busca y clasifica archivos <code>.TIF</code> y <code>.JPG</code>.</li>
+                                    <li>Ejecuta <code>exiftool</code> sobre cada imagen y parsea la salida.</li>
+                                    <li>Extrae los metadatos clave, agregando el nombre del archivo y su extensión.</li>
+                                    <li>Guarda los resultados en <code>metadata_tif.csv</code> y <code>metadata_jpg.csv</code>.</li>
+                                </ol>
+                    
+                                <h5 class="fw-bold">Dependencias</h5>
+                                <ul>
+                                    <li><code>os</code>: para gestión de rutas y archivos.</li>
+                                    <li><code>csv</code>: para guardar resultados en formato estructurado.</li>
+                                    <li><code>subprocess</code>: para ejecutar <code>ExifTool</code> desde Python.</li>
+                                </ul>
+                    
+                                <h5 class="fw-bold">Uso independiente</h5>
+                                <p>
+                                    Aunque se integra automáticamente desde <code>main_correccion_geometrica.py</code>, también puede ejecutarse manualmente desde otro script para generar los archivos de metadatos en cualquier carpeta que contenga imágenes.
+                                </p>
+                    
+                                <h5 class="fw-bold">Notas adicionales</h5>
+                                <ul>
+                                    <li>El script ignora archivos corruptos o imágenes que no puedan ser leídas por <code>ExifTool</code>.</li>
+                                    <li>Se asegura compatibilidad con nombres de campos variables en los metadatos.</li>
+                                    <li>La salida CSV está codificada en <code>UTF-8</code>.</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
-
+            </section>
     </div>
-
-
-
+</main>
     
+  
     
     
 
@@ -739,13 +727,14 @@
 
 
 <!-- Pie de Página -->
-<footer class="text-end mt-5 p-3 bg-light">
-    <p class="mb-1">Módulo de Corrección Geométrica y Coregistro Imágenes Multiespectrales</p>
-    <p class="mb-1">Desarrollado por  <a href="https://www.linkedin.com/in/zuluagapaola/" target="_blank" class="text-primary fw-bold">
-        Paola Andrea Mejia-Zuluaga
-    </a>
-</p>
-    <p class="mb-1"><a href="mailto:paomejia23@gmail.com" class="text-dark">paomejia23@gmail.com</a></p>
+<footer class="footer-custom">
+    <p>Módulo de Corrección Geométrica y Coregistro Imágenes Multiespectrales</p>
+    <p>Desarrollado por  
+        <a href="https://www.linkedin.com/in/zuluagapaola/" target="_blank">
+            Paola Andrea Mejía-Zuluaga
+        </a>
+    </p>
+    <p><a href="mailto:paomejia23@gmail.com">paomejia23@gmail.com</a></p>
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
