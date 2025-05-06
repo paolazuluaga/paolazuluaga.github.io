@@ -32,17 +32,38 @@
   
   <main class="container mt-5 mb-5">
     <div class="mx-auto" style="max-width: 900px; padding-left: 1rem; padding-right: 1rem;">
+        <!-- Contenedor bases de datos -->
+        <section class="seccion-publicacion mt-5 mb-5">
+        <div class="contenido-proyecto">
+            <h3 class="titulo-seccion">Bases de Datos publicadas</h3>
+            <div class="preview-wrapper">
+            <img src="../imgs/bd_pvelutinum_img_multiespectral.jpg" alt="Vista previa del artículo" class="img-fluid rounded">
+            <div class="overlay-difuminado">
+                <a href="https://doi.org/10.6084/m9.figshare.28654691.v1" target="_blank" class="btn-ver-articulo">
+                    Consultar la Base de Datos</a>
+            </div>
+        </div>
+        </section>
         <!-- Contenedor para publicación del artículo -->
         <section class="seccion-publicacion mt-5 mb-5">
         <div class="contenido-proyecto">
             <h3 class="titulo-seccion">Publicación científica</h3>
+            <div class="preview-wrapper">
+            <img src="../imgs/paper_texture_descriptors_mtoe_SVM.jpg" alt="Vista previa del artículo" class="img-fluid rounded">
+            <div class="overlay-difuminado">
+                <button class="btn-ver-articulo" data-toggle="modal" data-target="#modalArticulo3">Leer artículo completo</button>
+            </div>
+            </div>
+        </div>
+        <br>
+        <div class="contenido-proyecto">
             <div class="preview-wrapper">
             <img src="../imgs/paper_coregistration_remote_sensing.jpg" alt="Vista previa del artículo" class="img-fluid rounded">
             <div class="overlay-difuminado">
                 <button class="btn-ver-articulo" data-toggle="modal" data-target="#modalArticulo2">Leer artículo completo</button>
             </div>
             </div>
-        </div> 
+        </div>  
         <br>
         <div class="contenido-proyecto">
             <div class="preview-wrapper">
@@ -87,6 +108,25 @@
             </section> 
     </div>
   </main>
+
+<!-- Modal del artículos 3 - Descriptores de textura SVM SPIE-->
+<div class="modal fade" id="modalArticulo3" tabindex="-1" role="dialog" aria-labelledby="modalArticuloLabel3" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Artículo completo</h5>
+            <div class="d-flex align-items-center">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+        </div>
+        <div class="modal-body">
+            <iframe src="../docs/paper_texture_descriptors_mtoe_SVM.pdf#toolbar=0" width="100%" height="600px" style="border:none;"></iframe>
+        </div>
+        </div>
+    </div>
+    </div>
 
 <!-- Modal del artículos 2 - GP Deteccion P Velutinum MDPI-->
 <div class="modal fade" id="modalArticulo2" tabindex="-1" role="dialog" aria-labelledby="modalArticuloLabel2" aria-hidden="true">
