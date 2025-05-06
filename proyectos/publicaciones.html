@@ -39,11 +39,20 @@
             <div class="preview-wrapper">
             <img src="../imgs/paper_GP_PVelutinum_MDPI.JPG" alt="Vista previa del artículo" class="img-fluid rounded">
             <div class="overlay-difuminado">
-                <button class="btn-ver-articulo" data-toggle="modal" data-target="#modalArticulo">Leer artículo completo</button>
+                <button class="btn-ver-articulo" data-toggle="modal" data-target="#modalArticulo1">Leer artículo completo</button>
             </div>
             </div>
         </div>
         </section> 
+        <br>
+        <div class="contenido-proyecto">
+            <div class="preview-wrapper">
+            <img src="../imgs/paper_Detection_PVelutinum_Springer.jpg" alt="Vista previa del artículo" class="img-fluid rounded">
+            <div class="overlay-difuminado">
+                <button class="btn-ver-articulo" data-toggle="modal" data-target="#modalArticulo0">Leer artículo completo</button>
+            </div>
+            </div>
+        </div>
         <br>
         <!-- Contenedor para Libros y Capítulos -->
         <section class="seccion-publicacion mt-5 mb-5">
@@ -60,7 +69,7 @@
             <br>
             <div class="contenido-proyecto">
                 <div class="preview-wrapper">
-                <img src="../imgs/caplibro_territorios_totikes.jpg" alt="Vista previa del capítulo" class="img-fluid rounded">
+                <img src="../imgs/caplibro_territorios_totikes2.jpg" alt="Vista previa del capítulo" class="img-fluid rounded">
                 <div class="overlay-difuminado">
                     <button class="btn-ver-articulo" data-toggle="modal" data-target="#modalcap2">Leer capítulo completo</button>
                 </div>
@@ -70,14 +79,14 @@
     </div>
   </main>
 
-  <!-- Modal del artículos y libros -->
-  <div class="modal fade" id="modalArticulo" tabindex="-1" role="dialog" aria-labelledby="modalArticuloLabel" aria-hidden="true">
+  <!-- Modal del artículos 1 - GP Deteccion P Velutinum MDPI-->
+  <div class="modal fade" id="modalArticulo1" tabindex="-1" role="dialog" aria-labelledby="modalArticuloLabel1" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Artículo completo</h5>
           <div class="d-flex align-items-center">
-            <a href="../docs/GP_PVelutinum_MDPI.pdf" download="GP_PVelutinum_MDPI.pdf" class="btn-descargar-pdf" title="Descargar PDF">
+            <a href="../docs/paper_GP_PVelutinum_MDPI.pdf" download="GP_PVelutinum_MDPI.pdf" class="btn-descargar-pdf" title="Descargar PDF">
               <i class="fas fa-download"></i>
             </a>
             <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
@@ -86,7 +95,29 @@
           </div>
         </div>
         <div class="modal-body">
-          <iframe src="../docs/GP_PVelutinum_MDPI.pdf#toolbar=0" width="100%" height="600px" style="border:none;"></iframe>
+          <iframe src="../docs/paper_GP_PVelutinum_MDPI.pdf#toolbar=0" width="100%" height="600px" style="border:none;"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal del artículos 0 - Deteccion P Velutinum Springer-->
+  <div class="modal fade" id="modalArticulo0" tabindex="-1" role="dialog" aria-labelledby="modalArticuloLabel0" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Artículo completo</h5>
+          <div class="d-flex align-items-center">
+            <a href="../docs/paper_Detection_PVelutinum_Springer.pdf" download="Detection_PVelutinum_Springer.pdf" class="btn-descargar-pdf" title="Descargar PDF">
+              <i class="fas fa-download"></i>
+            </a>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+        <div class="modal-body">
+          <iframe src="../docs/paper_Detection_PVelutinum_Springer.pdf#toolbar=0" width="100%" height="600px" style="border:none;"></iframe>
         </div>
       </div>
     </div>
@@ -95,24 +126,24 @@
     <!-- Modal del capítulo 1 -->
     <div class="modal fade" id="modalcap1" tabindex="-1" role="dialog" aria-labelledby="modalCapLabel1" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
-          <div class="modal-content">
+            <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Capítulo de Libro</h5>
-              <div class="d-flex align-items-center">
+                <h5 class="modal-title">Capítulo de Libro</h5>
+                <div class="d-flex align-items-center">
                 <a href="../docs/capitulo_TerritoriosDorados.pdf" download="GP_PVelutinum_MDPI.pdf" class="btn-descargar-pdf" title="Descargar PDF">
-                  <i class="fas fa-download"></i>
+                    <i class="fas fa-download"></i>
                 </a>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-                  <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
-              </div>
+                </div>
             </div>
             <div class="modal-body">
-              <iframe src="../docs/capitulo_TerritoriosDorados.pdf#toolbar=0" width="100%" height="600px" style="border:none;"></iframe>
+                <iframe src="../docs/capitulo_TerritoriosDorados.pdf#toolbar=0" width="100%" height="600px" style="border:none;"></iframe>
             </div>
-          </div>
+            </div>
         </div>
-      </div>
+        </div>
 
 
     <!-- Modal del capítulo 2 -->
