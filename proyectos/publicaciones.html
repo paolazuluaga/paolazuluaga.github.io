@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Programación Genética – Detección de muérdago</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+</head>
+
+
+<body>
+
+  <header class="main-header header-proyecto">
+    <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center px-4">
+      <a href="../index.html" class="text-white text-decoration-none m-0">Portafolio: Paola Mejía-Zuluaga</a>
+      <nav class="nav">
+        <a class="nav-link" href="../index.html">Inicio</a>
+        <a class="nav-link" href="../index.html#contacto">Contacto</a>
+        <a class="nav-link" href="https://www.linkedin.com/in/zuluagapaola/" target="_blank">LinkedIn</a>
+      </nav>
+    </div>
+  </header>
+  
+  <div class="seccion-titulo-proyecto text-center mb-4">
+    <h2 class="titulo-tarjeta-proyecto bg-sombra">
+      <i class="fas fa-seedling icono-titulo"></i>
+      Publicaciones Científicas y Colaboraciones </h2>
+    <div class="decorador-subrayado"></div>
+  </div>
+  
+  <main class="container mt-5 mb-5">
+    <div class="mx-auto" style="max-width: 900px; padding-left: 1rem; padding-right: 1rem;">
+        <!-- Contenedor para publicación del artículo -->
+        <section class="seccion-publicacion mt-5 mb-5">
+        <div class="contenido-proyecto">
+            <h3 class="titulo-seccion">Publicación científica</h3>
+            <div class="preview-wrapper">
+            <img src="../imgs/paper_GP_PVelutinum_MDPI.JPG" alt="Vista previa del artículo" class="img-fluid rounded">
+            <div class="overlay-difuminado">
+                <button class="btn-ver-articulo" data-toggle="modal" data-target="#modalArticulo">Leer artículo completo</button>
+            </div>
+            </div>
+        </div>
+        </section> 
+        <br>
+        <!-- Contenedor para Libros y Capítulos -->
+        <section class="seccion-publicacion mt-5 mb-5">
+            <div class="contenido-proyecto">
+                <h3 class="titulo-seccion">Capítulos de Libros</h3>
+                <div class="preview-wrapper">
+                <img src="../imgs/caplibro_territorios_dorados.jpg" alt="Vista previa del capítulo" class="img-fluid rounded">
+                <div class="overlay-difuminado">
+                    <button class="btn-ver-articulo" data-toggle="modal" data-target="#modalcap1">Leer capítulo completo</button>
+                </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="contenido-proyecto">
+                <div class="preview-wrapper">
+                <img src="../imgs/caplibro_territorios_totikes.jpg" alt="Vista previa del capítulo" class="img-fluid rounded">
+                <div class="overlay-difuminado">
+                    <button class="btn-ver-articulo" data-toggle="modal" data-target="#modalcap2">Leer capítulo completo</button>
+                </div>
+                </div>
+            </div>
+            </section> 
+    </div>
+  </main>
+
+  <!-- Modal del artículos y libros -->
+  <div class="modal fade" id="modalArticulo" tabindex="-1" role="dialog" aria-labelledby="modalArticuloLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Artículo completo</h5>
+          <div class="d-flex align-items-center">
+            <a href="../docs/GP_PVelutinum_MDPI.pdf" download="GP_PVelutinum_MDPI.pdf" class="btn-descargar-pdf" title="Descargar PDF">
+              <i class="fas fa-download"></i>
+            </a>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+        <div class="modal-body">
+          <iframe src="../docs/GP_PVelutinum_MDPI.pdf#toolbar=0" width="100%" height="600px" style="border:none;"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Modal del capítulo 1 -->
+    <div class="modal fade" id="modalcap1" tabindex="-1" role="dialog" aria-labelledby="modalCapLabel1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Capítulo de Libro</h5>
+              <div class="d-flex align-items-center">
+                <a href="../docs/capitulo_TerritoriosDorados.pdf" download="GP_PVelutinum_MDPI.pdf" class="btn-descargar-pdf" title="Descargar PDF">
+                  <i class="fas fa-download"></i>
+                </a>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            </div>
+            <div class="modal-body">
+              <iframe src="../docs/capitulo_TerritoriosDorados.pdf#toolbar=0" width="100%" height="600px" style="border:none;"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    <!-- Modal del capítulo 2 -->
+    <div class="modal fade" id="modalcap2" tabindex="-1" role="dialog" aria-labelledby="modalCapLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Capítulo de Libro</h5>
+            <div class="d-flex align-items-center">
+            <a href="../docs/capitulo_TerritoriosTotikes.pdf" download="GP_PVelutinum_MDPI.pdf" class="btn-descargar-pdf" title="Descargar PDF">
+                <i class="fas fa-download"></i>
+            </a>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+        </div>
+        <div class="modal-body">
+            <iframe src="../docs/capitulo_TerritoriosTotikes.pdf#toolbar=0" width="100%" height="600px" style="border:none;"></iframe>
+        </div>
+        </div>
+    </div>
+    </div>
+
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    function descargarPDF() {
+      fetch('../docs/GP_PVelutinum_MDPI.pdf')
+        .then(response => response.blob())
+        .then(blob => {
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'GP_PVelutinum_MDPI.pdf';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+        })
+        .catch(() => alert('No se pudo descargar el archivo.'));
+    }
+  </script>
+</body>
+</html>
