@@ -275,6 +275,36 @@ header.main-header {
     text-decoration: none;
   }
   
+  /* Pestaña activa - resaltada con terracota */
+  .nav-tabs .nav-link.active {
+    background-color: #efd2c8 !important; /* Terracota */
+    color: rgb(189, 179, 179);
+    font-weight: 600;
+    border: none;
+    border-radius: 0.75rem 0.75rem 0 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  }
+
+  /* Pestañas inactivas - sin fondo ni sombra */
+  .nav-tabs .nav-link {
+    background-color: transparent;
+    color: #2F2F2F;
+    border: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    border-radius: 0.75rem 0.75rem 0 0;
+  }
+
+  /* Hover para inactivas */
+  .nav-tabs .nav-link:hover {
+    color: #B45A3C;
+    text-decoration: underline;
+  }
+
+  
+  
+  
+
   
 
   /* Enlaces*/
@@ -663,5 +693,24 @@ header.main-header {
     
     .footer-custom a:hover {
         text-decoration: underline;
+    }
+    
+
+    .codigo-highlight {
+      background-color: #f9f9f6;
+      color: #B45A3C; /* terracota o un tono arena si prefieres */
+      font-family: 'Roboto Mono', monospace;
+      font-size: 0.9rem;
+      padding: 1rem;
+      border-radius: 10px;
+      white-space: pre-wrap;
+    }
+    
+
+    pre code {
+      display: block;
+      max-height: 400px;
+      overflow-y: auto;
+      white-space: pre;
     }
     

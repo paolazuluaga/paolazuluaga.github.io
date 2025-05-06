@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Módulo de Preprocesamiento de Imágenes Multiespectrales</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+</head>
+<body class="background-color: #F9F9F6;">
+
+<header class="main-header header-proyecto">
+    <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center px-4">
+        <a href="../../index.html" class="text-white text-decoration-none m-0">Portafolio: Paola Mejía-Zuluaga</a>
+        <nav class="nav">
+        <a class="nav-link" href="../../index.html">Inicio</a>
+        <a class="nav-link" href="../../index.html#contacto">Contacto</a>
+        <a class="nav-link" href="https://www.linkedin.com/in/zuluagapaola/" target="_blank">LinkedIn</a>
+        </nav>
+    </div>
+</header>
+
+
+
+
+<main class="container mt-5 mb-5">
+    <div class="mx-auto" style="max-width: 900px; padding-left: 1rem; padding-right: 1rem;">
+      
+        <h1 class="titulo-proyecto text-center mt-5 mb-3">Módulo de Corrección Radiométrica</h1>
+        <p class="lead text-center">
+            Sistema automatizado para la corrección radiométrica de imágenes multiespectrales capturadas por dron, aplicando procesos físicos de calibración, normalización y mejora de calidad espectral.
+            </p>
+
+        <hr>
+        <br>
+
+        <div class="container container-custom mt-5">
+            <section class="card-proyecto p-4 mb-4">
+                <h3 class="subtitulo-proyecto mt-5">Descripción General</h3>
+                <p>
+                El <strong>Módulo de Corrección Radiométrica</strong> está diseñado para preprocesar imágenes multiespectrales capturadas con dron, garantizando la coherencia radiométrica entre diferentes vuelos y condiciones de iluminación. Su propósito es transformar las imágenes crudas en datos comparables y físicamente interpretables, adecuados para análisis espectral, clasificación supervisada o no supervisada, detección de objetos y monitoreo ambiental.
+                </p>
+                
+                <p>
+                El núcleo del módulo se basa en un proceso de corrección radiométrica en cinco etapas, aplicado a cada banda espectral de forma independiente y sistemática:
+                </p>
+                
+                <ol>
+                    <li><strong>Sustracción del Nivel Negro:</strong> Elimina el sesgo del sensor asociado a la señal base (ruido oscuro), restando el valor de referencia a todos los píxeles de la banda.</li>
+                    <li><strong>Calibración del Sensor:</strong> Aplica el factor de ganancia electrónico de la cámara, ajustando los valores para representar la energía registrada de forma proporcional.</li>
+                    <li><strong>Conversión a Reflectancia:</strong> Divide los valores por la irradiancia incidente, normalizando la respuesta del sensor respecto a la luz solar recibida.</li>
+                    <li><strong>Corrección por Viñeteo:</strong> Corrige el oscurecimiento hacia las esquinas de la imagen causado por la geometría de la lente, utilizando un modelo polinomial centrado en el punto óptico.</li>
+                    <li><strong>Normalización:</strong> Escala todos los valores al rango [0, 1] para garantizar uniformidad y facilitar su posterior análisis computacional.</li>
+                </ol>
+                
+                <p>
+                El módulo trabaja con imágenes multibanda en formato <code>.TIF</code> y guarda los resultados en formato <code>float32</code>, conservando tanto los metadatos globales como los específicos por banda (usando <code>rasterio</code>). Las imágenes corregidas mantienen su sistema de coordenadas original y son adecuadas para análisis espectral cuantitativo, incluso en entornos urbanos complejos.
+                </p>
+                
+                <p>
+                La implementación está orientada a la eficiencia y escalabilidad, procesando automáticamente múltiples zonas de estudio definidas por carpetas independientes. Además, en caso de ausencia de metadatos, el módulo tiene la capacidad de generarlos automáticamente mediante <code>ExifTool</code>, aunque este componente es externo al proceso de corrección radiométrica en sí.
+                </p>
+                
+                <p>
+                Gracias a su diseño modular y documentación exhaustiva, este sistema puede integrarse fácilmente a flujos de trabajo más amplios de análisis geoespacial, clasificación con aprendizaje automático o seguimiento de cambios ambientales.
+                </p>
+                
+                <br>
+
+
+                <h3 class="subtitulo-proyecto mt-5">Estructura del Módulo</h3>
+                <p>El módulo está organizado en una estructura de carpetas clara y modular que facilita su mantenimiento, escalabilidad y reutilización. A continuación se describe la estructura principal:
+                </p>
+
+                <pre class="codigo-bloque"><code>2_correccion_radiometrica/
+                │
+                ├── main_corr_radiometrica.py         # Script principal que ejecuta el flujo completo del procesamiento
+                ├── config.py                         # Archivo de configuración con rutas de entrada/salida y parámetros globales
+                ├── requirements.txt                  # Lista de dependencias requeridas para la ejecución del módulo
+                ├── data/
+                │   ├── Input/                        # Carpeta que contiene subcarpetas por zona de estudio
+                │   └── Output/                       # Carpeta donde se guardan las imágenes procesadas
+                │
+                └── scripts/
+                    ├── corr_radiometrica.py         # Implementación paso a paso de la corrección radiométrica
+                    └── metadata_extractor.py        # Script auxiliar para generar los metadatos con ExifTool
+                </code></pre>
+
+                <p>
+                    Esta estructura permite que el flujo de preprocesamiento pueda ser fácilmente ejecutado desde el script principal <code>main_corr_radiometrica.py</code>, mientras que los módulos especializados se encuentran organizados dentro de la carpeta <code>scripts/</code>. Esto mantiene una separación clara entre lógica de control, funciones específicas y configuración, lo que mejora la mantenibilidad y legibilidad del código.
+                </p>
+
+
+                <h3 class="subtitulo-proyecto mt-5">Organización de Datos de Entrada</h3>
+                <p>La estructura esperada para los datos de entrada se basa en una organización por zonas de estudio dentro de la carpeta <code>data/Input/</code>. Cada zona debe contar con sus propias imágenes multiespectrales en formato <code>.TIF</code>, y opcionalmente con imágenes <code>.JPG</code> capturadas simultáneamente. También se espera que cada carpeta contenga un archivo <code>metadata_tif.csv</code>, el cual puede generarse automáticamente si no existe.
+                </p>
+
+                <h6 class="fw-bold mt-3">Estructura esperada en la carpeta <code>Input/</code>:</h6>
+
+                <pre class="codigo-bloque"><code>data/
+                └── Input/
+                    ├── Zona_1/
+                    │   ├── DJI_0001.TIF
+                    │   ├── DJI_0002.TIF
+                    │   ├── DJI_0001.JPG
+                    │   └── metadata_tif.csv
+                    │
+                    ├── Zona_2/
+                    │   ├── DJI_0010.TIF
+                    │   ├── DJI_0011.TIF
+                    │   └── metadata_tif.csv
+                    │
+                    └── Zona_n/
+                        ├── ...
+                </code></pre>
+
+                <p>
+                    El sistema detecta automáticamente las subcarpetas dentro de <code>Input/</code> y las procesa una a una. En caso de que no se encuentre el archivo <code>metadata_tif.csv</code>, el módulo invoca ExifTool para generar los metadatos de las imágenes presentes en la carpeta. Los metadatos generados se guardan en dos archivos separados: <code>metadata_tif.csv</code> para imágenes .TIF y <code>metadata_jpg.csv</code> para imágenes .JPG, los cuales se almacenan directamente en la carpeta de cada zona.
+                </p>
+
+                <p>
+                    Esta organización modular por zonas permite trabajar con múltiples áreas de análisis de forma independiente, facilitando la paralelización y el manejo de grandes volúmenes de datos multiespectrales.
+                </p>
+
+
+
+                <h3 class="subtitulo-proyecto mt-5">Requerimientos de Software</h3>
+                <p>Para ejecutar correctamente el módulo de corrección radiométrica es necesario contar con los siguientes componentes de software instalados en el sistema:
+                </p>
+
+                <ul>
+                    <li><strong>Python:</strong> Versión 3.8 o superior.</li>
+                    <li><strong>ExifTool:</strong> Utilidad externa para la extracción de metadatos embebidos en imágenes.</li>
+                    <li><strong>Bibliotecas de Python:</strong> Las siguientes librerías deben instalarse previamente usando el archivo <code>requirements.txt</code> incluido:</li>
+                </ul>
+
+                <pre class="codigo-bloque"><code>pip install -r requirements.txt</code></pre>
+
+                <h6 class="fw-bold">Contenido del archivo <code>requirements.txt</code>:</h6>
+
+                <pre class="codigo-bloque"><code>numpy
+                pandas
+                rasterio
+                </code></pre>
+
+                <h6 class="fw-bold">Instalación de ExifTool:</h6>
+                <p>
+                    La herramienta ExifTool debe estar disponible desde la línea de comandos. Puedes instalarla según tu sistema operativo:
+                </p>
+
+                <ul>
+                    <li><strong>Windows:</strong> Descargar desde <a href="https://exiftool.org/" target="_blank">https://exiftool.org/</a> y agregar la carpeta al <code>PATH</code>.</li>
+                    <li><strong>Linux (Debian/Ubuntu):</strong> <code>sudo apt install libimage-exiftool-perl</code></li>
+                    <li><strong>MacOS:</strong> <code>brew install exiftool</code></li>
+                </ul>
+
+                <p>
+                    Se recomienda ejecutar este módulo en un entorno virtual o de desarrollo controlado para garantizar la compatibilidad de versiones y mantener la reproducibilidad del procesamiento.
+                </p>
+
+            </section>
+        </div>
+        
+
+        <!--Ejemplo de uso-->
+        <div class="container container-custom mt-5">
+            <section class="card-proyecto p-4 mb-4">
+                <h4>Ejemplo de Uso</h4>
+
+                <p>Esta sección proporciona una guía paso a paso para ejecutar el módulo de corrección radiométrica de imágenes multiespectrales.</p>
+
+                <h3>Archivo <code>config.py</code></h3>
+
+                <p>
+                    El archivo <code>config.py</code> define las rutas de entrada y salida utilizadas por el módulo. Estas rutas se configuran automáticamente a partir de la ubicación del script principal y no necesitan modificarse manualmente, a menos que se desee personalizar el flujo de trabajo.
+                </p>
+
+                <pre class="codigo-bloque"><code># config.py
+
+                import os
+
+                BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+                # Directorio donde se encuentran las carpetas por zona de estudio
+                INPUT_DIR = os.path.join(BASE_DIR, "data", "Input")
+
+                # Directorio de salida para las imágenes procesadas
+                OUTPUT_DIR = os.path.join(BASE_DIR, "data", "Output")
+
+                # Borrar resultados anteriores antes de procesar
+                LIMPIAR_OUTPUT_ANTES_DE_PROCESAR = True
+                </code></pre>
+
+                <h3>Organización de Archivos</h3>
+
+                <p>
+                    Dentro del directorio definido como <code>INPUT_DIR</code>, se espera que las imágenes estén organizadas en subcarpetas por zona de estudio, por ejemplo:
+                </p>
+
+                <pre class="codigo-bloque"><code>data/
+                ├── Input/
+                │   ├── Zona_01/
+                │   │   ├── DJI_0001.TIF
+                │   │   ├── DJI_0002.TIF
+                │   │   └── ...
+                │   └── Zona_02/
+                │       ├── DJI_0051.TIF
+                │       └── DJI_0052.TIF
+                ├── Output/
+                │   └── (se generará automáticamente)
+                </code></pre>
+
+                <p>
+                    Cada subcarpeta deberá contener imágenes en formato <code>.TIF</code>. Si no existe un archivo de metadatos <code>metadata_tif.csv</code> en la carpeta, este será generado automáticamente mediante <strong>ExifTool</strong>.
+                </p>
+
+                <h3>Ejecución del Preprocesamiento</h3>
+
+                <p>
+                    Para iniciar el proceso de corrección radiométrica, se debe ejecutar el script principal desde terminal:
+                </p>
+
+                <pre class="codigo-bloque"><code>python main_corr_radiometrica.py</code></pre>
+
+                <p>
+                    Este script recorrerá todas las zonas en <code>Input/</code>, generará los metadatos si no existen, aplicará las cinco etapas de corrección radiométrica y guardará las imágenes resultantes en <code>Output/[zona]</code>.
+                </p>
+
+                <h3>Ejemplo de Resultados</h3>
+
+                <p>Al finalizar la ejecución, se espera la siguiente estructura de salida:</p>
+
+                <pre class="codigo-bloque"><code>data/
+                ├── Output/
+                │   ├── Zona_01/
+                │   │   ├── DJI_0001.TIF
+                │   │   ├── DJI_0002.TIF
+                │   │   └── ...
+                │   └── Zona_02/
+                │       ├── DJI_0051.TIF
+                │       └── DJI_0052.TIF
+                </code></pre>
+
+                <p>Los archivos .TIF procesados serán imágenes multibanda en formato <code>float32</code>, con valores normalizados entre 0 y 1.</p>
+
+                <h3>Mensajes de Salida Esperados</h3>
+
+                <p>Durante la ejecución, se imprimen mensajes informativos como:</p>
+                <ul>
+                    <li><code>Procesando imagen: DJI_0001.TIF</code></li>
+                    <li><code>Nivel negro: 64.0, Factor de calibración: 1.015, Irradiancia: 1.201</code></li>
+                    <li><code>Valores después de la corrección de viñeteo: min=0.002, max=0.95</code></li>
+                    <li><code>Imagen corregida guardada en: ...</code></li>
+                </ul>
+
+                <h3>Consideraciones Finales</h3>
+
+                <ul>
+                    <li>Este módulo se puede integrar fácilmente con otros módulos de procesamiento o clasificación.</li>
+                    <li>Los metadatos <code>metadata_jpg.csv</code> también se generan y quedan disponibles para etapas posteriores del flujo de trabajo.</li>
+                    <li>Se recomienda mantener organizada la estructura por zonas para asegurar la trazabilidad de los datos procesados.</li>
+                </ul>
+
+
+            </section>
+        </div>
+
+        
+
+        <!-- main_preprocesamiento.py-->
+        <div class="container container-custom mt-5">
+
+            <section class="card-proyecto p-4 mb-4">
+                <h3 class="subtitulo-proyecto mt-5">Descripción del Código Principal (<code>main_corr_radiometrica.py</code>)</h3>
+                <h3 class="section-title">Estructura del Código</h3>
+                <p>
+                    Este script principal maneja el flujo completo del preprocesamiento radiométrico. Su función principal es recorrer
+                    las zonas de estudio definidas en la carpeta <code>Input/</code>, verificar y generar metadatos si es necesario, y aplicar la
+                    corrección radiométrica sobre cada imagen <code>.TIF</code>, organizando los resultados por zona en la carpeta <code>Output/</code>.
+                </p>
+            
+                <h3 class="section-title">Importación de Módulos</h3>
+                <p>
+                    Se importan módulos estándar como <code>os</code>, <code>sys</code> y <code>shutil</code>, así como módulos específicos del proyecto desde la carpeta <code>scripts/</code>:
+                </p>
+                <ul>
+                    <li><code>pandas</code> para manejo de metadatos.</li>
+                    <li><code>corr_radiometrica</code> para aplicar las etapas de corrección radiométrica a cada imagen.</li>
+                    <li><code>metadata_extractor</code> para generar automáticamente los archivos <code>metadata_tif.csv</code> y <code>metadata_jpg.csv</code> si no existen.</li>
+                    <li><code>config</code> para definir las rutas de entrada, salida y opciones de configuración.</li>
+                </ul>
+            
+                <h3 class="section-title">Función Principal: <code>ejecutar_correccion_radiometrica()</code></h3>
+                <p>
+                    Esta función ejecuta el flujo completo de procesamiento por zonas. Para cada subcarpeta en <code>Input/</code>:
+                </p>
+                <ol>
+                    <li>Verifica si existe un archivo <code>metadata_tif.csv</code>. Si no existe, lo genera automáticamente.</li>
+                    <li>Opcionalmente limpia la carpeta de salida si está activado el parámetro <code>LIMPIAR_OUTPUT_ANTES_DE_PROCESAR</code>.</li>
+                    <li>Lee los metadatos y recorre cada imagen <code>.TIF</code> para aplicar la corrección radiométrica.</li>
+                    <li>Guarda las imágenes procesadas en <code>Output/[zona]/</code>.</li>
+                </ol>
+                <p>Los errores o advertencias se reportan directamente en consola.</p>
+            
+                <h3 class="section-title">Flujo de Ejecución</h3>
+                <p>El flujo del script es el siguiente:</p>
+                <pre class="codigo-bloque"><code>
+            1. Leer las zonas de estudio desde la carpeta Input/
+            2. Verificar existencia de metadata_tif.csv en cada zona
+            3. Generar metadatos si no existen (ExifTool)
+            4. Leer metadatos con pandas
+            5. Procesar cada imagen con process_image_radiometrica()
+            6. Guardar resultados por zona en Output/
+                </code></pre>
+            
+                <h3 class="section-title">Ejecución del Script</h3>
+                <p>
+                    Para ejecutar el módulo completo, simplemente abrir una terminal en la ruta del proyecto y correr:
+                </p>
+                <pre class="codigo-bloque"><code>python main_corr_radiometrica.py</code></pre>
+                <p>El sistema buscará todas las zonas disponibles y ejecutará el procesamiento de forma automática.</p>
+            </section>
+
+
+            <!--Documentación del código-->
+            <section class="card-proyecto p-4 mb-4">
+                <h4 class="fw-bold">Documentación Scripts</h4>
+                <p>Selecciona el código que deseas explorar:</p>
+
+                <div class="accordion" id="accordionDocs">
+                    
+                    <!-- Rename-->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingGeo">
+                            <button id="geoButton" class="accordion-button collapsed blinking" type="button" data-bs-toggle="collapse" 
+                            data-bs-target="#collapseGeo" aria-expanded="false" aria-controls="collapseGeo">
+                            Extracción de metadatos (metadata_extractor.py)
+                            </button>
+                        </h2>
+                        <div id="collapseGeo" class="accordion-collapse collapse" aria-labelledby="headingGeo" data-bs-parent="#accordionDocs">
+                            <div class="accordion-body">
+                                <h5 class="fw-bold">Descripción General</h5>
+                                <p>
+                                    Este script se encarga de extraer automáticamente los metadatos embebidos en las imágenes <code>.TIF</code> y <code>.JPG</code> utilizando la herramienta <code>ExifTool</code>. Los metadatos extraídos incluyen información crítica como <strong>nivel negro</strong>, <strong>ganancia del sensor</strong>, <strong>irradiancia</strong>, <strong>coeficientes de viñeteo</strong>, entre otros. 
+                                </p>
+                    
+                                <p>
+                                    Los metadatos se guardan en dos archivos CSV separados dentro de cada carpeta de zona:
+                                    <ul>
+                                        <li><code>metadata_tif.csv</code>: contiene los metadatos de las imágenes multiespectrales .TIF.</li>
+                                        <li><code>metadata_jpg.csv</code>: contiene los metadatos de las imágenes RGB .JPG.</li>
+                                    </ul>
+                                </p>
+                    
+                                <h5 class="fw-bold">Función Principal: <code>generate_metadata_csv(folder_path)</code></h5>
+                                <p>
+                                    Esta función recibe como entrada la ruta a una carpeta de imágenes y genera automáticamente los dos archivos CSV de metadatos. Internamente ejecuta los siguientes pasos:
+                                </p>
+                                <ol>
+                                    <li>Verifica si la carpeta existe y contiene imágenes válidas.</li>
+                                    <li>Busca y clasifica archivos <code>.TIF</code> y <code>.JPG</code>.</li>
+                                    <li>Ejecuta <code>exiftool</code> sobre cada imagen y parsea la salida.</li>
+                                    <li>Extrae los metadatos clave, agregando el nombre del archivo y su extensión.</li>
+                                    <li>Guarda los resultados en <code>metadata_tif.csv</code> y <code>metadata_jpg.csv</code>.</li>
+                                </ol>
+                    
+                                <h5 class="fw-bold">Dependencias</h5>
+                                <ul>
+                                    <li><code>os</code>: para gestión de rutas y archivos.</li>
+                                    <li><code>csv</code>: para guardar resultados en formato estructurado.</li>
+                                    <li><code>subprocess</code>: para ejecutar <code>ExifTool</code> desde Python.</li>
+                                </ul>
+                    
+                                <h5 class="fw-bold">Uso independiente</h5>
+                                <p>
+                                    Aunque se integra automáticamente desde <code>main_corr_radiometrica.py</code>, también puede ejecutarse manualmente desde otro script para generar los archivos de metadatos en cualquier carpeta que contenga imágenes.
+                                </p>
+                    
+                                <h5 class="fw-bold">Notas adicionales</h5>
+                                <ul>
+                                    <li>El script ignora archivos corruptos o imágenes que no puedan ser leídas por <code>ExifTool</code>.</li>
+                                    <li>Se asegura compatibilidad con nombres de campos variables en los metadatos.</li>
+                                    <li>La salida CSV está codificada en <code>UTF-8</code>.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    
+                        
+                    </div>
+
+
+                    <!-- Rename-->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingRedun">
+                            <button id="utilsButton" class="accordion-button collapsed blinking" type="button" data-bs-toggle="collapse" 
+                            data-bs-target="#collapseRedun" aria-expanded="false" aria-controls="collapseRedun">
+                            Corrección Radiométrica (corr_radiometrica.py)
+                            </button>
+                        </h2>
+                        <div id="collapseRedun" class="accordion-collapse collapse" aria-labelledby="headingRedun" data-bs-parent="#accordionDocs">
+                            <div class="accordion-body">
+                                <h5 class="fw-bold">Descripción General</h5>
+                                <p>
+                                    Este script implementa un flujo completo y secuencial de <strong>corrección radiométrica</strong> para imágenes multiespectrales adquiridas con dron, asegurando la estandarización y comparabilidad espectral entre escenas. Está diseñado para conservar la integridad de los datos originales y minimizando errores inducidos por el sensor, la iluminación o la óptica.
+                                </p>
+                                <p>
+                                    En percepción remota, la corrección radiométrica es fundamental para convertir los valores digitales crudos (DNs) de las imágenes en mediciones físicas comparables como la <em>reflectancia aparente</em>, que representa la fracción de radiación reflejada por una superficie en condiciones específicas de iluminación. Este proceso es indispensable antes de aplicar cualquier análisis espectral, clasificación, segmentación o cálculo de índices como NDVI o GNDVI.
+                                </p>
+                    
+                                <h5 class="fw-bold">Alcance Científico</h5>
+                                <ul>
+                                    <li>Permite comparar imágenes tomadas en diferentes días, horas o condiciones atmosféricas.</li>
+                                    <li>Corrige las distorsiones del sensor para reflejar la señal real medida por los fotodetectores.</li>
+                                    <li>Facilita el entrenamiento de modelos de aprendizaje automático con datos radiométricamente coherentes.</li>
+                                    <li>Preserva la estructura espacial y espectral de la imagen sin realizar interpolaciones ni alteraciones innecesarias.</li>
+                                </ul>
+                    
+                                <h5 class="fw-bold">Flujo de Procesamiento</h5>
+                                <ol>
+                                    <li><strong>Sustracción del nivel negro:</strong> Elimina el valor mínimo captado por el sensor en oscuridad total, reduciendo el sesgo electrónico.</li>
+                                    <li><strong>Calibración del sensor:</strong> Aplica el factor de ganancia electrónica registrado durante el vuelo.</li>
+                                    <li><strong>Conversión a reflectancia:</strong> Normaliza los valores con base en la irradiancia solar captada por el sensor.</li>
+                                    <li><strong>Corrección por viñeteo:</strong> Compensa el oscurecimiento en los bordes de la imagen causado por la geometría de la lente.</li>
+                                    <li><strong>Normalización:</strong> Escala los valores al rango [0, 1] para facilitar su uso en algoritmos y visualizaciones.</li>
+                                </ol>
+                    
+                                <h5 class="fw-bold">Funciones Principales</h5>
+                                <ul>
+                                    <li><code>process_image_radiometrica()</code>: Orquesta todo el proceso de corrección radiométrica para una imagen específica.</li>
+                                    <li><code>subtract_black_level()</code>: Elimina el sesgo del sensor relacionado con el nivel negro.</li>
+                                    <li><code>apply_sensor_calibration()</code>: Escala los valores mediante el factor de ganancia.</li>
+                                    <li><code>convert_to_reflectance()</code>: Convierte los valores calibrados en reflectancia aparente.</li>
+                                    <li><code>apply_vignetting_correction()</code>: Corrige el efecto radial de viñeteo con un polinomio de sexto grado.</li>
+                                    <li><code>normalize_band()</code>: Realiza la normalización lineal de los valores finales.</li>
+                                </ul>
+                    
+                                <h5 class="fw-bold">Entrada Esperada</h5>
+                                <ul>
+                                    <li>Imagen multiespectral en formato <code>.TIF</code> con varias bandas (por ejemplo, Red, NIR, RedEdge).</li>
+                                    <li>Metadatos previamente extraídos desde <code>metadata_tif.csv</code> en formato <code>Pandas DataFrame</code>.</li>
+                                </ul>
+                    
+                                <h5 class="fw-bold">Salida</h5>
+                                <ul>
+                                    <li>Imagen corregida en formato <code>.TIF</code> y tipo <code>float32</code>, con los mismos metadatos de entrada.</li>
+                                    <li>La estructura espectral y espacial se mantiene idéntica a la imagen original (sin reproyección).</li>
+                                </ul>
+                    
+                                <h5 class="fw-bold">Recomendaciones</h5>
+                                <ul>
+                                    <li>Este script debe ejecutarse antes de cualquier clasificación, cálculo de índices o análisis espectral.</li>
+                                    <li>Es compatible con datos multitemporales, siempre que los metadatos por vuelo estén disponibles.</li>
+                                </ul>
+                    
+                                <h5 class="fw-bold">Limitaciones</h5>
+                                <ul>
+                                    <li>No incluye corrección atmosférica. La reflectancia calculada es <em>aparente</em>, no de superficie.</li>
+                                    <li>Se requiere que los metadatos estén completos y correctamente estructurados en el archivo CSV.</li>
+                                    <li>El viñeteo se modela como simétrico y radial; no contempla asimetrías ópticas complejas.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    
+                        
+                    </div>
+                </div>
+            </section>
+    </div>
+</main>
+
+
+
+    
+    
+    
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Control en Javascript para detener parpadeo de los botones -->
+    <script>
+        function detenerTitileo(buttonId) {
+            let button = document.getElementById(buttonId);
+            button.style.animation = "none";  // Detiene la animación inmediatamente
+            button.classList.remove("blinking");  // Asegura que no vuelva a activarse
+        }
+    
+        // Aplicar el evento a cada botón
+        document.getElementById("geoButton").addEventListener("click", function() {
+            detenerTitileo("geoButton");
+        });
+    
+        document.getElementById("utilsButton").addEventListener("click", function() {
+            detenerTitileo("utilsButton");
+        });
+    </script>
+
+
+<!-- Pie de Página -->
+<footer class="footer-custom">
+    <p>Módulo de Corrección Geométrica y Coregistro Imágenes Multiespectrales</p>
+    <p>Desarrollado por  
+        <a href="https://www.linkedin.com/in/zuluagapaola/" target="_blank">
+            Paola Andrea Mejía-Zuluaga
+        </a>
+    </p>
+    <p><a href="mailto:paomejia23@gmail.com">paomejia23@gmail.com</a></p>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+</body>
+</html>
