@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Programación Genética – Detección de muérdago</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+</head>
+
+
+<body>
+
+  <header class="main-header header-proyecto">
+    <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center px-4">
+      <a href="../index.html" class="text-white text-decoration-none m-0">Portafolio: Paola Mejía-Zuluaga</a>
+      <nav class="nav">
+        <a class="nav-link" href="../index.html">Inicio</a>
+        <a class="nav-link" href="../index.html#contacto">Contacto</a>
+        <a class="nav-link" href="https://www.linkedin.com/in/zuluagapaola/" target="_blank">LinkedIn</a>
+      </nav>
+    </div>
+  </header>
+  
+  <div class="seccion-titulo-proyecto text-center mb-4">
+    <h2 class="titulo-tarjeta-proyecto bg-sombra">
+      <i class="fas fa-seedling icono-titulo"></i>
+      Machine Learning Notebooks</h2>
+    <div class="decorador-subrayado"></div>
+  </div>
+  
+  <main class="container mt-5 mb-5">
+    <div class="mx-auto" style="max-width: 900px; padding-left: 1rem; padding-right: 1rem;">
+        <div class="card-proyecto mt-5">
+            <div class="card-body texto-ajustado px-3">
+              <h3>Notebook: Detección de muérdago con SVM y Descriptores de textura</h3>
+              <p>
+                Este notebook implementa un flujo de trabajo de aprendizaje supervisado para detectar <strong>muérdago en imágenes multiespectrales</strong> capturadas por dron, utilizando descriptores de textura basados en GLCM (Gray Level Co-Occurrence Matrix).
+              </p>
+              <h3>Objetivo</h3>
+              <p>
+                Evaluar la capacidad discriminativa de diferentes combinaciones de bandas y texturas para la clasificación pixel a pixel de áreas infestadas por muérdago, mediante un clasificador <strong>SVM (Support Vector Machine)</strong>.
+              </p>
+        
+              <h3>Descripción del flujo</h3>
+              <ul>
+                <li><strong>Preprocesamiento:</strong> Normalización de las bandas seleccionadas mediante MinMaxScaler (rango 0 a 1).</li>
+                <li><strong>Vectorización:</strong> Conversión de las bandas y máscaras a formato vectorial para entrenamiento y evaluación.</li>
+                <li><strong>Entrenamiento:</strong> Entrenamiento del clasificador SVM con los datos de textura generados a partir de imágenes etiquetadas. Definición de hiperparámetros con GridSearch.</li>
+                <li><strong>Evaluación:</strong> Reporte de precisión, Kappa, F1-score, y visualización de predicciones para validación visual.</li>
+              </ul>
+        
+              <h3>Características clave</h3>
+              <ul>
+                <li>Uso de librerías como <code>scikit-learn</code>, <code>skimage</code>, <code>NumPy</code>, <code>Pandas</code>.</li>
+                <li>Implementación de GLCM para extraer patrones de textura de las imágenes multiespectrales.</li>
+                <li>Evaluación rigurosa de métricas de desempeño (accuracy, Kappa, precision, recall).</li>
+              </ul>
+        
+              <h3>Entorno de ejecución</h3>
+              <ul>
+                <li>Plataforma: Google Colab</li>
+                <li>Lenguaje: Python</li>
+                <li>Dependencias clave: <code>scikit-learn</code>, <code>skimage</code>, <code>matplotlib</code>, <code>pandas</code></li>
+              </ul>
+              <br>
+              <a href="https://colab.research.google.com/drive/10mEovWZn3hh9ToOLGWu1v20f-P4RO_XN?usp=sharing"
+                 target="_blank" class="btn-azul">
+                <i class="fab fa-google"></i> Ver notebook en Colab
+              </a>
+            </div>
+          </div>
+    </div>
+  </main>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
